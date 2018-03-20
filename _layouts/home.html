@@ -1,6 +1,12 @@
 ---
 layout: default
 ---
+<style>
+.project {
+  width: 200px;
+}
+</style>
+
 
 <div class="home">
   {%- if page.title -%}
@@ -12,13 +18,16 @@ layout: default
   {%- if site.projects.size > 0 -%}
     <h2 class="post-list-heading">{{ page.list_title | default: "Projects" }}</h2>
     <ul class="post-list">
+      {% assign image_files = site.static_files | where: "image", true %}
       {%- for project in site.projects -%}
+      {% assign logoarr = image_files | where: "name", project.logo %}
       <li>
-        <h3>
-          <a class="post-link" href="{{ project.url | relative_url }}">
-            {{ project.title | escape }}
+        <div class="project">
+          <a class="post-link" href="{{ project.url | relative_url }}" style="text-align:center">
+            <img src="{{ logoarr[0].path }}" height=200>
+            <h3>{{ project.title | escape }}</h3>
           </a>
-        </h3>
+        </div>
       </li>
       {%- endfor -%}
     </ul>

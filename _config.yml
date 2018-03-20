@@ -28,6 +28,12 @@ collections:
   projects:
     output: true
 
+defaults:
+  - scope:
+      path: "assets/img"
+    values:
+      image: true
+
 # Build settings
 markdown: kramdown
 theme: minima
