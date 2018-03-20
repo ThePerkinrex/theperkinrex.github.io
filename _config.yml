@@ -33,6 +33,10 @@ defaults:
       path: "assets/img"
     values:
       image: true
+  - scope:
+      path: "assets/css"
+    values:
+      style: true
 
 # Build settings
 markdown: kramdown

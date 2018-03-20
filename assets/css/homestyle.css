@@ -1,0 +1,11 @@
+.project {
+  width: 200px;
+  margin: auto;
+  text-align: center;
+}
+table {
+  width: 100%;
+}
+td {
+  background-color: #fdfdfd;
+}

@@ -1,11 +1,7 @@
 ---
 layout: default
 ---
-<style>
-.project {
-  width: 200px;
-}
-</style>
+
 
 
 <div class="home">
@@ -17,20 +13,29 @@ layout: default
 
   {%- if site.projects.size > 0 -%}
     <h2 class="post-list-heading">{{ page.list_title | default: "Projects" }}</h2>
-    <ul class="post-list">
+    <table style="border:none">
       {% assign image_files = site.static_files | where: "image", true %}
+      {% assign i = 0 %}
       {%- for project in site.projects -%}
+      {%- if i == 2 -%}
+      </tr>
+      {% assign i = 0 %}
+      {%- endif -%}
+      {%- if i == 0 -%}
+      <tr>
+      {%- endif -%}
       {% assign logoarr = image_files | where: "name", project.logo %}
-      <li>
+      <td style="border:none">
         <div class="project">
-          <a class="post-link" href="{{ project.url | relative_url }}" style="text-align:center">
+          <a class="post-link" href="{{ project.url | relative_url }}">
             <img src="{{ logoarr[0].path }}" height=200>
-            <h3>{{ project.title | escape }}</h3>
+            <h3>{{ project.title }}</h3>
           </a>
         </div>
-      </li>
-      {%- endfor -%}
-    </ul>
+      </td>
+    {% assign i = i | plus: 1 %}
+    {%- endfor -%}
+  </table>
   {%- endif -%}
 
   {%- if site.posts.size > 0 -%}
