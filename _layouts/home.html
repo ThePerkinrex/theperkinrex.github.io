@@ -2,8 +2,6 @@
 layout: default
 ---
 
-
-
 <div class="home">
   {%- if page.title -%}
     <h1 class="page-heading">{{ page.title }}</h1>
@@ -17,7 +15,7 @@ layout: default
       {% assign image_files = site.static_files | where: "image", true %}
       {% assign i = 0 %}
       {%- for project in site.projects -%}
-      {%- if i == 2 -%}
+      {%- if i == 3 -%}
       </tr>
       {% assign i = 0 %}
       {%- endif -%}
