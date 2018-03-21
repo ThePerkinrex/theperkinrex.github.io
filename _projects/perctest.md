@@ -2,7 +2,7 @@
 layout: page
 title: PercTest
 logo: Perctest.png
-favicon: Perctest.png
+favicon: PercTestSmall.png
 permalink: /perctest/
 ---
 
