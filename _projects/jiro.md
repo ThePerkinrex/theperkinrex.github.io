@@ -2,7 +2,7 @@
 layout: page
 title: Jiro
 logo: Jiro.png
-favicon: Jiro.png
+favicon: JiroSmall.png
 permalink: /jiro/
 ---
 
