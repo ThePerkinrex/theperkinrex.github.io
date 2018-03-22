@@ -17,8 +17,9 @@ title: ThePerkinrex
 email: theperkinrex@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   I'm ThePerkinrex and I mostly develop in Python 3, Java and Arduino but I also know JavaScript(EcmaScript),
-  CSS, HTML and processing(A Java based environtment).
-  I have a few projects (the ones shown in this page)
+  CSS, HTML, Kotlin and processing(A Java based environtment).
+  I'm also developing a language called Jiro in Python.
+  I have a few projects (the ones shown in this website)
   and some smaller ones open in my github account
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://theperkinrex.github.io" # the base hostname & protocol for your site, e.g. http://example.com
