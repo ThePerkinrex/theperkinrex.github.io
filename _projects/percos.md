@@ -6,4 +6,4 @@ favicon: PercOSsquare.png
 permalink: /percos/
 ---
 
-PercOS
+PercOS is a virtuad system trying to emulate a UNIX system
