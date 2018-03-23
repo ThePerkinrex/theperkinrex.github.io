@@ -5,4 +5,5 @@
 layout: home
 favicon: Theperkinrexnnew.png
 title: Home
+show: false
 ---
