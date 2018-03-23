@@ -6,4 +6,4 @@ favicon: JiroSmall.png
 permalink: /jiro/
 ---
 
-Jiro
+Jiro is a programming language that PercOS includes natively
