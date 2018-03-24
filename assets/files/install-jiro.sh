@@ -3,8 +3,9 @@ if [ "`whoami`" != "root" ]; then
 	echo "You're not running this as root, please enter the password to run as root"
 	sudo echo ""
 fi
+echo "getting version"
 version=`curl -sS https://api.github.com/repos/theperkinrex/jiro/releases/latest | grep -oiE "\"tag_name\": \"v\d+\.\d+\.\d+\"" | grep -oiE "v\d+\.\d+\.\d+"`
-
+echo "Latest varsion: $version"
 echo "Installing Jiro $version"
 mkdir tmp
 cd tmp
