@@ -11,14 +11,17 @@ show: false
 {% assign uninstallerarr = res_files | where: "name", "uninstall-jiro.sh" %}
 {% assign uninstaller = installerarr[0] %}
  * ### Installer:
-    * #### <a href="{{installer.path | escape}}" id="installer" target="_blank">Download</a>
+    * #### <a href="{{installer.path | escape}}" id="installer" target="_blank">Download for UNIX systems (OSX and Linux)</a>
+    * #### Windows download is not available
     * #### [HOWTO](#how-do-i-install-jiro)
  * ### Uninstaller:
-    * #### <a href="{{uninstaller.path | escape}}" id="uninstaller" target="_blank">Download</a>
+    * #### <a href="{{uninstaller.path | escape}}" id="uninstaller" target="_blank">Download for UNIX systems (OSX and Linux)</a>
+    * #### Windows download is not available
     * #### [HOWTO](#how-do-i-uninstall-jiro)
 
 ## How do I install Jiro
 
+### For UNIX systems: OSX and Linux
 First download the [installer](#installer) from this page.
 Then open up a command line and go to the directory where the installer is:
 
@@ -35,10 +38,13 @@ And finally execute it
 `./install-jiro.sh`
 
 It might ask for an admin password as it is trying to write to `/usr/local/`
-
+### For Windows
+There's currently not an installer available for Windows
 
 ## How do I uninstall Jiro
 
+
+### For UNIX systems: OSX and Linux
 First download the [uninstaller](#uninstaller) from this page.
 Then open up a command line and go to the directory where the uninstaller is:
 
@@ -55,3 +61,5 @@ And finally execute it
 `./uninstall-jiro.sh`
 
 It might ask for an admin password as it is trying to remove to `/usr/local/jiro`
+### For Windows
+There's currently not an uninstaller available for Windows
