@@ -3,7 +3,14 @@
   <div class="wrapper">
     {%- assign default_paths = site.pages | map: "path" -%}
     {%- assign page_paths = site.header_pages | default: default_paths -%}
-    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
+    {% assign image_files = site.static_files | where: "image", true %}
+    {% assign logoarr = image_files | where: "name", site.logo %}
+    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">
+      <img src="{{ logoarr[0].path }}" height=40 style="padding-bottom: 5px; padding-right: 10px;">
+    </a>
+    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">
+      {{ site.title | escape }}
+    </a>
 
     {%- if page_paths -%}
       <nav class="site-nav">
