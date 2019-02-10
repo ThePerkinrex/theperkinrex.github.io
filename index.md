@@ -4,6 +4,5 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: home
 favicon: Theperkinrexnnew.png
-title: Home
 show: false
 ---

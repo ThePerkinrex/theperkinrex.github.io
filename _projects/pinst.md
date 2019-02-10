@@ -6,4 +6,4 @@ favicon: Pinst.png
 permalink: /pinst/
 ---
 
-Pinst is a bash installer which takes install scripts from a git repository online and is able to install whatever the install script says
+Pinst is a rust based installer which takes makefiles from a port on github and makes them on your computer
