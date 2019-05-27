@@ -16,4 +16,4 @@ Until now, the website has been a bit dead, and I've been thinking to use it for
 In this site I'd like to share my projects and findings. I'll try to post regularly about whatever I'm working in at that moment.
 
 I wan't this to become somewhere where I can share the little knowledge I have with whoever wants to read it. I want also to share here what I learn along the years, so it can maybe even help someone (seems pretty unlikely to me, but whatever I can say what I want 🙃).
-I hope you like the page and the idea I have to use it.
+I hope you like the page and the idea I have for it.
