@@ -20,8 +20,16 @@ loc: home
                 {{ post.title }}
             </a>
             {%- if site.show_excerpts -%}
-            {{ post.excerpt }}
+                {{ post.excerpt }}
             {%- endif -%}
+            {% if post.categories %}
+            {% if post.categories.size > 0 %}
+            <br>
+            {% for cat in post.categories %}
+                <span class="category">{{ cat }}</span>
+            {% endfor %}
+            {% endif %}
+            {% endif %}
         </li>
         {% if i == 6 %}
         {% break %}

@@ -113,3 +113,11 @@ body {
 .project-logo {
     max-height: 4em !important;
 }
+
+.category {
+    display: inline-block;
+    padding: 2px 4px;
+    margin: 2px;
+    background: lighten($text_color, 75);
+    color: lighten($text_color, 20);
+}
