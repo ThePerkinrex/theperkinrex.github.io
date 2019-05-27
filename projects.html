@@ -1,0 +1,30 @@
+---
+layout: page
+loc: projects
+title: Projects
+permalink: /projects/
+nosep: yes
+---
+
+
+<section>
+    <h1 id="content_header"><b>Projects</b></h1>
+    <div class="separator"></div>
+    <ul class="post-list">
+        {%- for project in site.projects -%}
+        <li class="post-list-item">
+            {% if project.logo %}
+                <img src="{{ project.logo }}" class="project-logo"><br>
+            {%- endif -%}
+            <a class="post-name" href="{{ project.url | relative_url }}">
+                {{ project.title }}
+            </a>
+            {% if project.description %}
+                <br>
+                >> {{ project.description }}
+            {%- endif -%}
+            <div class="separator"></div>
+        </li>
+        {%- endfor -%}
+    </ul>
+</section>

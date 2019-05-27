@@ -109,3 +109,7 @@ body {
 #p-time {
     color: lighten($text_color, 25);
 }
+
+.project-logo {
+    max-height: 4em !important;
+}
