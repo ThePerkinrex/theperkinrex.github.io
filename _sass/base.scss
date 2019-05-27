@@ -1,0 +1,111 @@
+$text_color: #2a3533;
+
+body {
+    color: $text_color;
+}
+
+#sidebar{
+    width: 30vw;
+    max-width: 325px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: end;
+    margin: 2.5vw;
+
+    #profile {
+        img {
+            width: 10vw;
+            margin: 2vw;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: bolder;
+            margin-bottom: 5px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+    }
+    #sitemap {
+        margin-top: 20px;
+
+        ul {
+            list-style: none;
+            li a {
+                font-size: 22px;
+                color: inherit;
+            }
+            li#page_selected a {
+                font-weight: 900;
+            }
+        }
+    }
+    .separator {
+        margin-top: 10px;
+        float: right;
+    }
+}
+
+.separator {
+    width: 50px;
+    height: 3px;
+    background: $text_color;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+#main_content{
+    margin-top: 50px;
+    position: absolute;
+    right: 5vw;
+    top: 0;
+    width: 100vw - 40vw;
+
+    .separator {
+        margin-bottom: 15px;
+        margin-top: 20px;
+    }
+    #footer {
+        a {
+            color: $text_color;
+            svg {
+                width: 20px;
+            }
+        }
+    }
+}
+
+.icon {
+    display: inline-block;
+    stroke: currentColor;
+    fill: none;
+    position: relative;
+    top: 2px;
+}
+
+.post-list-item {
+    span.post-date {
+        color: lighten($text_color, 25);
+        margin-right: 20px;
+    }
+    a.post-name {
+        font-size: 1.3em;
+        font-weight: 600;
+        color: $text_color;
+    }
+    margin-bottom: 20px !important;
+    img {
+        max-height: 100px;
+    }
+}
+
+#p-title {
+    font-weight: 600;
+}
+
+#p-time {
+    color: lighten($text_color, 25);
+}

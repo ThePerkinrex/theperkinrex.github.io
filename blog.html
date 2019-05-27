@@ -1,0 +1,35 @@
+---
+layout: page
+loc: blog
+title: Blog
+permalink: /blog/
+nosep: yes
+---
+
+
+<section>
+    <h1 id="content_header"><b>Posts</b></h1>
+    <div class="separator"></div>
+    <ul class="post-list">
+        {%- for post in site.posts -%}
+        <li class="post-list-item">
+            {% if post.topimg %}
+            <img src="{{ post.topimg }}"><br>
+            {% endif %}
+            {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+            <span class="post-date">{{ post.date | date: date_format | escape }}</span>
+            <a class="post-name" href="{{ post.url | relative_url }}">
+                {{ post.title }}
+            </a>
+            {% if post.description %}
+                <br>
+                >> {{ post.description }}
+            {%- endif -%}
+            {%- if site.show_excerpts -%}
+            {{ post.excerpt }}
+            {%- endif -%}
+            <div class="separator"></div>
+        </li>
+        {%- endfor -%}
+    </ul>
+</section>

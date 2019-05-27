@@ -1,0 +1,33 @@
+---
+layout: page
+loc: home
+---
+
+
+<section>
+    <p>Welcome to my site, where I'll post tech and programming related things</p>
+</section>
+<div class="separator"></div>
+<section>
+    <h1 id="content_header">Recent posts</h1>
+    <ul class="post-list">
+        <!--{% increment i %}-->
+        {%- for post in site.posts -%}
+        <li class="post-list-item">
+            {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+            <span class="post-date">{{ post.date | date: date_format | escape }}</span>
+            <a class="post-name" href="{{ post.url | relative_url }}">
+                {{ post.title }}
+            </a>
+            {%- if site.show_excerpts -%}
+            {{ post.excerpt }}
+            {%- endif -%}
+        </li>
+        {% if i == 6 %}
+        {% break %}
+        {% endif %}
+
+        <!--{% increment i %}-->
+        {%- endfor -%}
+    </ul>
+</section>

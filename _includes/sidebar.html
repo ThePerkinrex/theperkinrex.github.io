@@ -1,0 +1,16 @@
+<div id="sidebar">
+    <div id="profile">
+        <img src="/assets/logo.png">
+        <h1>ThePerkinrex</h1>
+        <p>Tech-lover & developer</p>
+    </div>
+    <div class="separator"></div>
+    <div id="sitemap">
+        <ul>
+            <li {% if page.loc == 'home' %} id="page_selected" {% endif %}><a href="/">Home</a></li>
+            <li {% if page.loc == 'about' %} id="page_selected" {% endif %}><a href="/about">About</a></li>
+            <li {% if page.loc == 'projects' %} id="page_selected" {% endif %}><a href="/projects">Projects</a></li>
+            <li {% if page.loc == 'blog' %} id="page_selected" {% endif %}><a href="/blog">Blog</a></li>
+        </ul>
+    </div>
+</div>
