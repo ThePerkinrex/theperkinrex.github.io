@@ -74,7 +74,7 @@ if status == 1:
         os.remove('_drafts/'+fname)
 
 if status  == 2:
-    commitname = input("enter the commit message")
+    commitname = input("Enter the commit message: ")
     subprocess.run(['git', 'add', '*'])
     subprocess.run(['git', 'commit', '-m', '"%s"' % commitname])
     subprocess.run(['git', 'push'])
