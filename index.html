@@ -22,6 +22,10 @@ loc: home
             {%- if site.show_excerpts -%}
                 {{ post.excerpt }}
             {%- endif -%}
+            {% if post.description %}
+                <br>
+                >> {{ post.description }}
+            {%- endif -%}
             {% if post.categories %}
             {% if post.categories.size > 0 %}
             <br>
