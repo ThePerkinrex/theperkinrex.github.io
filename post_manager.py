@@ -1,3 +1,4 @@
+#!python3 post_manager.py
 import time, os, subprocess
 
 def get_fname(title, dir):
