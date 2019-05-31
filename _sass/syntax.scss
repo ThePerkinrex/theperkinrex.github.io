@@ -1,0 +1,12 @@
+$bg: #fdfdfd;
+.highlight {
+    background: $bg !important;
+    code {
+        background: $bg !important;
+    }
+}
+
+.highlighter-rouge {
+    box-shadow: 5px 5px 33px -1px #E8E8E8;
+    background: $bg !important;
+}
