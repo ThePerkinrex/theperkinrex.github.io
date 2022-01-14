@@ -1,7 +1,8 @@
-$text_color: #2a3533;
+@import "syntax";
 
 body {
     color: $text_color;
+    background-color: $bg_color;
 }
 
 #sidebar{
@@ -87,9 +88,10 @@ body {
     top: 2px;
 }
 
+$time-fade-out: 0.25;
 .post-list-item {
     span.post-date {
-        color: lighten($text_color, 25);
+        color: fade-out($text_color, $time-fade-out);
         margin-right: 20px;
     }
     a.post-name {
@@ -108,7 +110,7 @@ body {
 }
 
 #p-time {
-    color: lighten($text_color, 25);
+    color: fade-out($text_color, $time-fade-out);
 }
 
 .project-logo {
@@ -119,6 +121,6 @@ body {
     display: inline-block;
     padding: 2px 4px;
     margin: 2px;
-    background: lighten($text_color, 75);
-    color: lighten($text_color, 20);
+    background: fade-out($text_color, 0.85);
+    color: fade-out($text_color, 0.15);
 }
