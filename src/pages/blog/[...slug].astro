@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { compileTypst } from '../../lib/typst';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -12,9 +13,11 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
-const { Content } = await render(post);
+// const { Content } = await render(post);
+const { head, body } = compileTypst(post.filePath!, Astro.logger)
 ---
 
 <BlogPost {...post.data}>
-	<Content />
+	<!-- <Content /> -->
+	<Fragment set:html={body} />
 </BlogPost>
