@@ -1,4 +1,5 @@
 ---
+import '../../styles/typst.css';
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { compileTypst } from '../../lib/typst';
@@ -15,6 +16,7 @@ type Props = CollectionEntry<'blog'>;
 const post = Astro.props;
 // const { Content } = await render(post);
 const { head, body } = compileTypst(post.filePath!, Astro.logger)
+Astro.logger?.info('[pdf] ' + post.data.pdfPath)
 ---
 
 <BlogPost {...post.data}>

@@ -1,0 +1,25 @@
+/* Center the display math */
+.typst-display-math {
+  margin: 1em auto;
+  text-align: center;
+}
+
+.typst-display-math>svg {
+  display: inline-block;
+}
+
+.typst-inline-math {
+  display: inline-block;
+}
+
+/* Ensure inline math SVGs are inline */
+.typst-inline-math>svg {
+  display: inline-block;
+  overflow: visible;
+}
+
+.typst-code-block {
+  font-size: 14px;
+  overflow-x: auto;
+}
+

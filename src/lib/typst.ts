@@ -1,6 +1,6 @@
-import { execSync, spawnSync } from 'node:child_process'
-import { tmpdir } from 'node:os'
-// import { join } from 'node:path'
+import { spawnSync } from 'node:child_process'
+// import { tmpdir } from 'node:os'
+import { dirname } from 'node:path'
 // import { randomUUID } from 'node:crypto'
 interface Logger {
 
@@ -18,18 +18,25 @@ interface Logger {
         error: (msg: string) => void;
     
 }
+
+export const TYPST_ARGS = ['--features', 'html', '--root', 'src']
+
+
 export function compileTypst(sourceFile: string, logger: Logger | undefined): { head: string; body: string } {
 //   const out = join(tmpdir(), `${randomUUID()}.html`)
 
-  const out = spawnSync('typst', ['compile', '--features', 'html', '--format', 'html', sourceFile, '-'], {
+  const cmd = 'typst'
+  const args = ['compile', ...TYPST_ARGS, '--format', 'html', sourceFile, '-'];
+  
+	console.log()
+  logger?.info('Calling ' + cmd + ' ' + JSON.stringify(args))
+  
+  const out = spawnSync(cmd, args, {
     encoding: 'utf8',
   })
 
   const lines = out.stderr?.trimEnd()?.split('\n') ?? []
 
-  if (lines.length > 0 ) {
-	console.log()
-  }
 
   for (const l of lines) {
 	const line = l.trimEnd()
