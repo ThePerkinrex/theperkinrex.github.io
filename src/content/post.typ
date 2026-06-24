@@ -17,7 +17,7 @@
   // let wrapper = it => box(wrapper(it), stroke: red)
   html.elem(
     "span",
-    html.frame(wrapper(
+    (wrapper(
       // Add invisible elements below the math body to measure its bottom position.
       math.attach(math.limits(body.body), b: pad([#none#math-bot-label], -1em))
         + sym.wj
@@ -53,7 +53,7 @@
   show math.equation.where(block: true): it => {
     html.elem(
       "div",
-      html.frame(it),
+      it,
       attrs: (class: "typst-display-math"),
     )
   }

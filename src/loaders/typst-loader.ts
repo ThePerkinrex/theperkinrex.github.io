@@ -29,7 +29,7 @@ export function typstLoader(options: { postsDir: string }) {
 
 		async load({ store, logger, parseData }: LoaderContext) {
 			const public_base = path.join(process.cwd(), "public")
-			const pdfDir = path.join("blog", "pdf");
+			const pdfDir = path.join("pdf", "blog");
 			mkdirSync(path.join(public_base, pdfDir), { recursive: true });
 			rmSync(path.join(public_base, pdfDir), {recursive: true});
 			mkdirSync(path.join(public_base, pdfDir), { recursive: true });
@@ -76,13 +76,13 @@ export function typstLoader(options: { postsDir: string }) {
 
 				if (data.draft && import.meta.env.PROD) continue;
 
-				try {
-					const out = spawnSync('typst', ['compile', ...TYPST_ARGS, file, path.join(public_base, pdfOut)]);
-					if(out.error) throw out.error;
-					logger.info('Built at ' + path.join(public_base, pdfOut))
-				} catch (e) {
-					logger.warn(`Could not compile PDF for ${file}`);
-				}
+				// try {
+				// 	const out = spawnSync('typst', ['compile', ...TYPST_ARGS, file, path.join(public_base, pdfOut)]);
+				// 	if(out.error) throw out.error;
+				// 	logger.info('Built at ' + path.join(public_base, pdfOut))
+				// } catch (e) {
+				// 	logger.warn(`Could not compile PDF for ${file}`);
+				// }
 
 
 				store.set({
