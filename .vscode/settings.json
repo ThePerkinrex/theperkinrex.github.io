@@ -1,5 +1,8 @@
 {
 	"tinymist.typstExtraArgs": [
 		"--features=html"
+	],
+	"tinymist.fontPaths": [
+		"src/assets/fonts"
 	]
 }

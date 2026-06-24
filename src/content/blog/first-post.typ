@@ -21,3 +21,15 @@ Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperd
 $
   x = a / b
 $
+
+A code block:
+```
+Code block
+```
+
+A styled code block:
+```js
+function hello(){
+  console.log('aaaa')
+}
+```

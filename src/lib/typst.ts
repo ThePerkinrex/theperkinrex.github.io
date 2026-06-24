@@ -19,7 +19,7 @@ interface Logger {
     
 }
 
-export const TYPST_ARGS = ['--features', 'html', '--root', 'src']
+export const TYPST_ARGS = ['--features', 'html', '--root', 'src', '--font-path', 'src/assets/fonts/']
 
 
 export function compileTypst(sourceFile: string, logger: Logger | undefined): { head: string; body: string } {

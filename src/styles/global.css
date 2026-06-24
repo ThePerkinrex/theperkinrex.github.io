@@ -29,6 +29,10 @@ body {
 	font-size: 20px;
 	line-height: 1.7;
 }
+
+code, kbd, samp, pre {
+	font-family: var(--font-atkinson-mono);
+}
 main {
 	width: 720px;
 	max-width: calc(100% - 2em);
@@ -140,3 +144,5 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+
+

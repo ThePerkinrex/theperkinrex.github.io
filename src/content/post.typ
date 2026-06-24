@@ -141,6 +141,8 @@
   #set document(title: title, description: description)
   #set par(justify: true)
 	#set page(margin: (x: 120pt))
+  #set text(font: "Atkinson Hyperlegible")
+  #show raw: set text(font: "Atkinson Hyperlegible Mono")
 
   #if target() != "html" {
     pad(x: -50pt, bottom: 20pt,image_shadow(radius: 5pt, image("blog/" + heroImage)))
