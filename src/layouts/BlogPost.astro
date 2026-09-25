@@ -6,7 +6,9 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type PostData = CollectionEntry<'blog'>['data'];
+type Props = Pick<PostData, 'title' | 'description' | 'pubDate' | 'updatedDate' | 'heroImage'> &
+	Partial<Pick<PostData, 'pdfPath'>>;
 
 const { title, description, pubDate, updatedDate, heroImage, pdfPath } = Astro.props;
 ---
@@ -75,7 +77,7 @@ const { title, description, pubDate, updatedDate, heroImage, pdfPath } = Astro.p
 							}
 						</div>
 						<h1>{title}</h1>
-						<a href={pdfPath} download>Download as PDF</a>
+						{pdfPath && <a href={pdfPath} download>Download as PDF</a>}
 						<hr />
 					</div>
 					<slot />

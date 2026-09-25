@@ -118,7 +118,7 @@
   description: none,
   heroImage: none,
   draft: false,
-  updateDate: none,
+  updatedDate: none,
   tags: (),
   body,
 ) = context [
@@ -132,7 +132,7 @@
   #metadata((
     title: title,
     pubDate: pubDate,
-    updateDate: updateDate,
+    updatedDate: updatedDate,
     description: description,
     tags: tags,
     heroImage: heroImage,

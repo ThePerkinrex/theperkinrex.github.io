@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { spawnSync } from 'node:child_process';
 import { TYPST_ARGS } from '../../../lib/typst';
-import path from 'node:path';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');

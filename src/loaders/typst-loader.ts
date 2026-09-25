@@ -1,6 +1,5 @@
 import type { Loader, LoaderContext } from "astro/loaders";
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
 import { glob } from "node:fs/promises";
 import path from "node:path";
 import { z } from "astro/zod";
@@ -71,7 +70,12 @@ export function typstLoader(options: { postsDir: string }) {
 
 				logger.info("Raw post data: " + JSON.stringify(raw));
 
-				const data = await parseData<Record<string, unknown>>({ id, data: {...raw, pdfPath: '/' + pdfOut} });
+				// Typst emits `none` as null; drop those so optional fields stay
+				// undefined instead of being coerced (e.g. null -> 1970-01-01)
+				const fields = Object.fromEntries(
+					Object.entries(raw).filter(([, v]) => v !== null),
+				);
+				const data = await parseData<Record<string, unknown>>({ id, data: {...fields, pdfPath: '/' + pdfOut} });
 				logger.info("Parsed data: " + JSON.stringify(data));
 
 				if (data.draft && import.meta.env.PROD) continue;

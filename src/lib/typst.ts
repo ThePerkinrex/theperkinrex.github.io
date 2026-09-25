@@ -1,6 +1,5 @@
 import { spawnSync } from 'node:child_process'
 // import { tmpdir } from 'node:os'
-import { dirname } from 'node:path'
 // import { randomUUID } from 'node:crypto'
 interface Logger {
 
