@@ -41,3 +41,8 @@ command = ["sh", "scripts/build-mode.sh"]
 dev = "run"
 rerun-on = ["scripts/build-mode.sh"]
 generates = ["site/build-mode.json"]
+
+# tola help "[typst.fonts]" — fonts for the PDF versions of posts (browser fonts live in web-assets)
+[typst.fonts]
+paths = ["static/typst-fonts"]
+system = false

@@ -1,6 +1,7 @@
 #import "@tola/source:0.0.0": tola-meta
-#import "@tola/address:0.0.0": asset-url
-// Admonitions, `toc`, `csv-table`: see site/components.typ.
+// Admonitions, `asset-image`, `details`, `csv-table`: see site/components.typ. Posts are also
+// typeset as a downloadable PDF, so use these components instead of `html.*` elements, which
+// only exist on the web page.
 #import "/site/components.typ": *
 
 // Every field is declared in `site/schema.typ`.
@@ -112,17 +113,16 @@ placed; this post puts it at the very end.
 
 = Images
 
-Put image files in `static/web-assets/images/` and reference them through `asset-url` with their
-`/assets/...` URL:
+Put image files in `static/web-assets/images/` and show them with `asset-image` and their
+`/assets/...` URL. The web page loads the published file and the PDF embeds it:
 
-#html.img(src: asset-url("/assets/images/logo.png"), alt: "The site logo", width: 120, height: 120)
+#asset-image("/assets/images/logo.png", alt: "The site logo", width: 120, height: 120)
 
-= Raw HTML
+= Collapsible sections
 
-When Typst has no equivalent, typed HTML elements are available:
+`details` folds content away on the web page; the PDF always shows it open:
 
-#html.details[
-  #html.summary[Click to expand]
+#details[Click to expand][
   Hidden content.
 ]
 

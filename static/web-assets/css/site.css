@@ -560,6 +560,17 @@ summary {
 	background: var(--teal-soft);
 	color: var(--heading);
 }
+.pdf-download {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	margin: 0 0 1em 0;
+	font-size: 0.8em;
+	text-decoration: none;
+}
+.pdf-download:hover {
+	text-decoration: underline;
+}
 .back {
 	margin-top: 3em;
 }

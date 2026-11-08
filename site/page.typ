@@ -2,7 +2,8 @@
 #import "@tola/code:0.0.0": code-themes, render-code
 #import "layout.typ": format-date, shell
 #import "listing.typ": post-list
-#import "selection.typ": is-post
+#import "selection.typ": is-post, pdf-output
+#import "components.typ": icon
 #import "@tola/document:0.0.0": current-document
 
 /// Typst's own footnote placement is unavailable inside a custom `<html>` shell, so references
@@ -45,6 +46,8 @@
 
 #let draft-badge = html.span(class: "draft-badge")[Draft]
 
+#let download-icon = icon("M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", "m7 10 5 5 5-5", "M12 15V3")
+
 /// A blog post: hero image, date, title, description, then the body.
 #let post-template(page) = {
   let meta = page.source.meta
@@ -75,6 +78,12 @@
           #if meta.tags.len() > 0 {
             html.ul(class: "tags")[#for tag in meta.tags { html.li[#tag] }]
           }
+          // The same post typeset for paper (site/print.typ).
+          #let pdf = pdf-output(page)
+          #html.a(class: "pdf-download", href: output-url(pdf), download: pdf.split("/").last())[
+            #download-icon
+            #html.span[Download PDF]
+          ]
           #html.hr()
         ]
         #html.div(id: "post-body")[#content-rules(include page.source.file)]

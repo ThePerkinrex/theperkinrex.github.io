@@ -31,6 +31,19 @@
     ))
 }
 
+/// The downloadable PDF of a post, next to its page and named after it:
+/// `blog/my-post/index.html` → `blog/my-post/my-post.pdf`.
+#let pdf-output(page) = {
+  let parts = page.output.split("/")
+  let directory = parts.slice(0, -1)
+  let name = if parts.last() == "index.html" {
+    if directory.len() == 0 { "index" } else { directory.last() }
+  } else {
+    parts.last().split(".").first()
+  }
+  (directory + (name + ".pdf",)).join("/")
+}
+
 /// The blog posts among `pages`, newest first. Every post must set a `date`.
 #let select-posts(pages) = {
   let posts = pages.filter(page => is-post(page.source))
