@@ -6,7 +6,7 @@
 #import "@tola/code:0.0.0": code-themes
 #import "@tola/document:0.0.0": current-document
 #import "@tola/site:0.0.0": site
-#import "components.typ": asset-source
+#import "components.typ": asset-source, code-options, line-number, line-number-digits
 #import "selection.typ": pdf-output
 #import "theme.typ": body-font, mono-font, palette
 
@@ -77,7 +77,18 @@
     stroke: 0.75pt + palette.line,
     radius: 6pt,
     inset: (x: 1.2em, y: 1em),
-    text(size: 0.85em, it),
+    text(size: 0.85em, context {
+      let options = code-options.get()
+      if not options.numbers { return it }
+      // A right-aligned number column as wide as the widest number, as on the web page.
+      let width = measure("0" * line-number-digits(it, options)).width
+      show raw.line: line => {
+        box(width: width, align(right, text(fill: palette.muted, str(line-number(line, options)))))
+        h(1.2em)
+        line.body
+      }
+      it
+    }),
   )
 
   show quote.where(block: true): it => block(

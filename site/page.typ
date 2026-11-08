@@ -3,7 +3,7 @@
 #import "layout.typ": format-date, shell
 #import "listing.typ": post-list
 #import "selection.typ": is-post, pdf-output
-#import "components.typ": icon
+#import "components.typ": code-options, icon, line-number, line-number-digits
 #import "@tola/document:0.0.0": current-document
 
 /// Typst's own footnote placement is unavailable inside a custom `<html>` shell, so references
@@ -45,6 +45,22 @@
   set outline(target: selector(heading).within(current-document().location))
   set raw(theme: code-themes.github)
   show raw: render-code.with(dark-theme: code-themes.github-dark)
+  // Numbered blocks: each line becomes a `.line` span carrying its number, which site.css shows.
+  show raw.where(block: true): it => context {
+    let options = code-options.get()
+    if not options.numbers { return it }
+    // `data-line` has no typed parameter on `html.span`.
+    show raw.line: line => html.elem(
+      "span",
+      attrs: (class: "line", "data-line": str(line-number(line, options))),
+      line.body,
+    )
+    render-code(
+      it,
+      dark-theme: code-themes.github-dark,
+      attrs: (class: "numbered", style: "--line-digits: " + str(line-number-digits(it, options))),
+    )
+  }
   show footnote: footnote-ref
   // Wide tables scroll inside their own box instead of widening the page on phones.
   show table: it => html.div(class: "table-scroll", it)

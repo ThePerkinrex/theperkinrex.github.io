@@ -7,9 +7,9 @@
 
 #title()
 
-Hi! I'm Juan, also known as ThePerkinrex online. I'm a developer passionate about all things
-tech: programming languages, low-level stuff, electronics, and whatever rabbit hole I've fallen
-into this month.
+Hi! I'm Juan, also known as ThePerkinrex online. I'm a developer passionate about all things tech:
+programming languages, low-level stuff, electronics, and whatever rabbit hole I've fallen into this
+month.
 
 = About the site
 

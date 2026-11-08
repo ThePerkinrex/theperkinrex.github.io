@@ -1,12 +1,13 @@
 // Components posts can use: `#import "/site/components.typ": *`
-// (admonitions, `asset-image`, `details` and `csv-table`).
+// (admonitions, `asset-image`, `details`, `csv-table`, `code` and `kbd`).
 //
 // Every post is rendered twice: as an HTML page and as a downloadable PDF (`site/print.typ`).
 // Each component therefore has two renderings and picks one with `by-target`; posts only call the
 // component and never use `html.*` directly, which the PDF would silently drop.
 
 #import "@tola/address:0.0.0": asset-url
-#import "theme.typ": admonition-tints, palette
+#import "@preview/keyle:0.4.0"
+#import "theme.typ": admonition-tints, mono-font, palette
 
 /// `html` when rendering a web page, `paged` when rendering the PDF.
 #let by-target(html: none, paged: none) = context if target() == "html" { html } else { paged }
@@ -171,3 +172,91 @@
     ..body.flatten().map(cell => [#cell]),
   )
 }
+
+// Code blocks are line-numbered by default (the `raw` rules in page.typ and print.typ read these
+// options). `code` changes the options for the blocks in its body only.
+
+#let code-defaults = (numbers: true, start: 1)
+#let code-options = state("code-options", code-defaults)
+
+/// Line-numbering options for the code blocks in `body`:
+/// `#code(numbers: false)[```sh ...```]` or `#code(start: 42)[```rust ...```]`.
+#let code(numbers: code-defaults.numbers, start: code-defaults.start, body) = {
+  assert(type(numbers) == bool, message: "`numbers` must be true or false")
+  assert(type(start) == int, message: "`start` must be an integer, got " + repr(start))
+  code-options.update((numbers: numbers, start: start))
+  body
+  code-options.update(code-defaults)
+}
+
+/// The number shown for one `raw.line` under `options`.
+#let line-number(line, options) = line.number + options.start - 1
+
+/// How many digits the widest line number of a code block has, to size the number column.
+#let line-number-digits(block, options) = calc.max(
+  str(block.lines.len() + options.start - 1).len(),
+  str(options.start).len(),
+)
+
+/// Keys and shortcuts, via the keyle package: `#kbd("Ctrl+Shift+P")`, `#kbd("Ctrl", "K")`,
+/// `#kbd("cmd", "Q")` (aliases such as cmd, up, enter become glyphs). The web page gets semantic
+/// `<kbd>` elements, styled in site.css; the PDF gets keycaps in the site's colours.
+#let kbd = keyle.config(
+  html: "kbd",
+  theme: keyle.themes.standard.with(
+    fill: palette.code-bg,
+    stroke: palette.line.darken(25%) + 0.6pt,
+    shadow: palette.line.darken(25%),
+    text-args: (fill: palette.text, font: mono-font, size: 0.85em),
+  ),
+)
+
+// Marks: `#latex` and `#typst` set the names the way the projects themselves do, in running text.
+
+/// The LaTeX logo, built as `\LaTeX` builds it, in Computer Modern (here New Computer Modern, which
+/// Typst embeds): a small raised A tucked under the T, and a lowered E. It follows the surrounding
+/// weight. The offsets are LaTeX's own; site.css repeats them for HTML (`.latex-mark`), with a
+/// five-letter subset of the font (`fonts/LaTeXMark-*.woff2`).
+#let latex = by-target(
+  html: html.elem("span", attrs: (
+    class: "latex-mark",
+    role: "img",
+    aria-label: "LaTeX",
+  ))[L#html.span(class: "a")[A]T#html.span(class: "e")[E]X],
+  paged: box(text(font: "New Computer Modern")[L#h(-0.36em)#box(move(
+      dy: -0.2em,
+      text(size: 0.7em)[A],
+    ))#h(-0.15em)T#h(-0.1667em)#box(move(dy: 0.215em)[E])#h(-0.125em)X]),
+)
+
+/// The official Typst wordmark's outlines (the hero art's copy), drawn in the current text colour.
+/// Its viewBox is 91×35 with the baseline 24.41 units down and an x-height of about 20 units.
+#let typst-wordmark-paths = (
+  read("/static/hero-sources/typst-wordmark-white.svg")
+    .matches(regex("\\bd=\"([^\"]+)\""))
+    .map(m => m.captures.first())
+)
+
+/// The Typst wordmark, sized so its x-height matches the body font's and its baseline sits on the
+/// line's. The HTML rendering is sized in site.css (`.typst-mark`).
+#let typst = by-target(
+  // The <span> keeps the <svg> inline: on its own Typst treats it as a block and ends the paragraph.
+  html: html.elem("span", attrs: (class: "typst-mark", role: "img", aria-label: "Typst"), html.elem(
+    "svg",
+    attrs: (viewBox: "0 0 91 35", fill: "currentColor", "aria-hidden": "true"),
+    typst-wordmark-paths.map(d => html.elem("path", attrs: (d: d))).join(),
+  )),
+  paged: context {
+    let fill = if type(text.fill) == color { text.fill } else { black }
+    let body = typst-wordmark-paths.map(d => "<path d=\"" + d + "\"/>").join()
+    let svg = (
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91 35\" fill=\""
+        + fill.to-hex()
+        + "\">"
+        + body
+        + "</svg>"
+    )
+    // 10.59 of the 35 units hang below the baseline.
+    box(baseline: 30.26%, image(bytes(svg), format: "svg", height: 0.87em, alt: "Typst"))
+  },
+)

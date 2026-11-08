@@ -3,6 +3,23 @@
   (MIT, https://github.com/HermanMartinus/bearblog). Colours come from the site logo.
 */
 
+/* New Computer Modern, cut down to the letters of the `#latex` mark (fonts/LaTeXMark-README.txt). */
+@font-face {
+	font-family: "LaTeX Mark";
+	src: url("../fonts/LaTeXMark-Regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0041, U+0045, U+004C, U+0054, U+0058;
+}
+@font-face {
+	font-family: "LaTeX Mark";
+	src: url("../fonts/LaTeXMark-Bold.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0041, U+0045, U+004C, U+0054, U+0058;
+}
 @font-face {
 	font-family: "Atkinson";
 	src: url("../fonts/AtkinsonHyperlegible-Regular.woff2") format("woff2");
@@ -207,6 +224,19 @@ code {
 	border-radius: 4px;
 	font-size: 0.9em;
 }
+kbd {
+	display: inline-block;
+	padding: 1px 6px;
+	margin: 0 1px;
+	font-size: 0.85em;
+	line-height: 1.4;
+	white-space: nowrap;
+	background-color: var(--code-bg);
+	border: 1px solid var(--line);
+	border-bottom-width: 2px;
+	border-radius: 4px;
+	box-shadow: 0 1px 0 rgba(var(--shadow-color), 0.12);
+}
 pre {
 	padding: 1.25em 1.5em;
 	border-radius: 8px;
@@ -218,6 +248,17 @@ pre {
 }
 pre > code {
 	all: unset;
+}
+/* Line numbers: `.line` spans from site/page.typ. The number is generated content, so copying the
+   code leaves it out. */
+pre.numbered .line::before {
+	content: attr(data-line);
+	display: inline-block;
+	width: calc(var(--line-digits, 2) * 1ch);
+	margin-right: 1.5ch;
+	text-align: right;
+	color: var(--muted);
+	user-select: none;
 }
 blockquote {
 	border-left: 4px solid var(--logo-blue);
@@ -597,6 +638,32 @@ summary {
 }
 
 /* Admonitions (site/components.typ) */
+/* `#latex` (site/components.typ): LaTeX's own offsets, in Computer Modern. The A is set at 0.7em,
+   so its offsets are divided by 0.7 to stay in the surrounding text's em. */
+.latex-mark {
+	font-family: "LaTeX Mark", "Latin Modern Roman", "Computer Modern", serif;
+	white-space: nowrap;
+}
+.latex-mark .a {
+	font-size: 0.7em;
+	position: relative;
+	top: -0.286em;
+	margin-left: -0.514em;
+	margin-right: -0.214em;
+}
+.latex-mark .e {
+	position: relative;
+	top: 0.5ex;
+	margin-left: -0.1667em;
+	margin-right: -0.125em;
+}
+/* `#typst`: x-height matched to the body font, baseline on the line's. */
+.typst-mark svg {
+	display: inline-block;
+	height: 0.87em;
+	width: auto;
+	vertical-align: -0.264em;
+}
 .admonition {
 	--tint: var(--logo-blue);
 	margin: 0 0 1.5em 0;

@@ -51,7 +51,9 @@
 // 2. LaTeX, in its own typeface and with its own kerning.
 #let latex(ink) = {
   set text(font: "New Computer Modern", size: 88pt, fill: ink)
-  [L#h(-0.36em)#box(move(dy: -0.21em, text(size: 0.7em)[A]))#h(-0.15em)T#h(-0.1667em)#box(move(dy: 0.2155em)[E])#h(-0.125em)X]
+  [L#h(-0.36em)#box(move(dy: -0.21em, text(size: 0.7em)[A]))#h(-0.15em)T#h(-0.1667em)#box(move(
+      dy: 0.2155em,
+    )[E])#h(-0.125em)X]
 }
 
 // 3. Typst: the wordmark's baseline sits 24.41 of its 35 units down.

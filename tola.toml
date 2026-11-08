@@ -51,4 +51,4 @@ system = false
 [formatter]
 indent = 2
 print-width = 100
-prose-wrap = "none"
+prose-wrap = "fill"

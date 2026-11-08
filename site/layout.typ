@@ -110,7 +110,8 @@
 ]
 
 #let site-footer() = html.footer(class: "site-footer")[
-  #html.p[© #build-info.year Juan Mahou · Built with #html.a(href: "https://tola.build")[Tola] and #html.a(href: "https://typst.app")[Typst]]
+  #html.p[© #build-info.year Juan Mahou · Built with #html.a(href: "https://tola.build")[Tola] and
+    #html.a(href: "https://typst.app")[Typst]]
 ]
 
 /// Wrap `body` in the complete page shell and declare it as `output`.

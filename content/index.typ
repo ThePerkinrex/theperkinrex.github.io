@@ -15,5 +15,5 @@
   ]
 ]
 
-Welcome! This is where I write about programming, tech and whatever I happen to be building at
-the moment. Have a look at the #link("/blog/")[blog], or read a bit #link("/about/")[about me].
+Welcome! This is where I write about programming, tech and whatever I happen to be building at the
+moment. Have a look at the #link("/blog/")[blog], or read a bit #link("/about/")[about me].

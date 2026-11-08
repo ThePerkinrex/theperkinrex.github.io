@@ -8,7 +8,7 @@
 #tola-meta((
   title: "Example post",
   description: "A kitchen-sink post showing everything a post can do. Never published.",
-  date: "2026-11-08",
+  date: "2026-11-07",
   // updated: "2026-11-09",
   tags: ("meta", "typst"),
   // A 2:1 banner (1020×510), preferably SVG, in `static/web-assets/images/`:
@@ -29,9 +29,9 @@ instead, like this one: `content/blog/<slug>/index.typ`.
 
 = Text
 
-Paragraphs are just text. You get *strong*, _emphasis_, `inline code`, #strike[strikethrough],
-and #link("https://typst.app/docs")[links]. Links to other pages on this site use their route,
-like #link("/about/")[the about page], and Tola checks they exist at build time.
+Paragraphs are just text. You get *strong*, _emphasis_, `inline code`, #strike[strikethrough], and
+#link("https://typst.app/docs")[links]. Links to other pages on this site use their route, like
+#link("/about/")[the about page], and Tola checks they exist at build time.
 
 #quote(block: true)[
   Blockquotes use the accent colour on their left border.
@@ -46,7 +46,8 @@ like #link("/about/")[the about page], and Tola checks they exist at build time.
 
 / Term: and so do term lists.
 
-Footnotes collect at the end of the post.#footnote[Like this one.] Each gets a link back.#footnote[Footnotes can hold *markup* and #link("https://typst.app")[links].]
+Footnotes collect at the end of the post.#footnote[Like this one.] Each gets a link
+back.#footnote[Footnotes can hold *markup* and #link("https://typst.app")[links].]
 
 = Admonitions
 
@@ -95,8 +96,8 @@ $ integral_0^infinity e^(-x^2) dif x = sqrt(pi) / 2 $
 
 == Tables from data
 
-Data files next to the post can be loaded with `csv`, `json`, `yaml`, `toml` or `read`.
-They are inputs only, never published:
+Data files next to the post can be loaded with `csv`, `json`, `yaml`, `toml` or `read`. They are
+inputs only, never published:
 
 #csv-table(csv("languages.csv"))
 
@@ -107,9 +108,9 @@ The oldest language listed is #langs.sorted(key: l => int(l.at("First appeared")
 
 = Citations
 
-Cite entries from a `.bib` (or Hayagriva `.yml`) file with `@key`, like @knuth1984, or with a
-page supplement @sicp[p.~42]. The bibliography is rendered wherever `#bibliography(...)` is
-placed; this post puts it at the very end.
+Cite entries from a `.bib` (or Hayagriva `.yml`) file with `@key`, like @knuth1984, or with a page
+supplement @sicp[p.~42]. The bibliography is rendered wherever `#bibliography(...)` is placed; this
+post puts it at the very end.
 
 = Images
 
