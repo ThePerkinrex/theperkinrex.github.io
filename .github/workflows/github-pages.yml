@@ -16,6 +16,9 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  TOLA_VERSION: 0.8.1
+
 jobs:
   build:
     name: Build
@@ -24,36 +27,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Install Typst
-        uses: typst-community/setup-typst@v5
-        with:
-          typst-version: ^0.15.0
-
-      - name: Setup Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: 26
-          cache: npm
-
-      # - name: Setup Pages
-      #   id: pages
-      #   uses: actions/configure-pages@v6
-
-      - name: Install dependencies
-        run: npm ci
+      - name: Install Tola
+        run: |
+          archive="tola-${TOLA_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+          base="https://github.com/tola-rs/tola-ssg/releases/download/v${TOLA_VERSION}"
+          cd "$RUNNER_TEMP"
+          curl -fsSLO "$base/$archive"
+          curl -fsSLO "$base/checksums.txt"
+          grep " $archive\$" checksums.txt | sha256sum --check -
+          mkdir -p "$HOME/.local/bin"
+          tar xzf "$archive" -C "$HOME/.local/bin" tola
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Build
-        run: npm run build
-        # env:
-        #   # Injected by configure-pages; sets the correct base path
-        #   # if your site lives at username.github.io/repo-name/
-        #   SITE: ${{ steps.pages.outputs.origin }}
-        #   BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: |
+          tola --version
+          tola build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: dist
+          path: public
 
   deploy:
     name: Deploy

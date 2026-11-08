@@ -1,4 +1,7 @@
 {
-  "recommendations": ["astro-build.astro-vscode", "unifiedjs.vscode-mdx"],
-  "unwantedRecommendations": []
+	// The Tola extension runs `tola lsp`, which resolves the `@tola/*` packages and the site config.
+	// Tinymist can't (the packages import a module only Tola provides), and both claim `.typ` files,
+	// so disable Tinymist for this workspace.
+	"recommendations": ["tola.tola"],
+	"unwantedRecommendations": ["myriad-dreamin.tinymist"]
 }

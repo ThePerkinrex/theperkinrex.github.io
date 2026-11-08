@@ -1,0 +1,43 @@
+# Tola configuration (v0.8.1)
+# https://github.com/tola-rs/tola-ssg
+
+# tola help "[site]"
+[site]
+origin = "https://theperkinrex.github.io"
+base-path = "/"
+title = "ThePerkinrex"
+authors = [{ name = "Juan Mahou" }]
+description = "Juan Mahou's blog about programming, tech and whatever I happen to be building."
+languages = []
+language = "en"
+
+# tola help "[build]"
+[build]
+entry = "site.typ"
+content-dir = "content"
+publish-dir = "public"
+
+# tola help "[build.references]"
+[build.references]
+navigation = "error"
+resources = "error"
+fragments = "error"
+
+# tola help "[assets]"
+[assets]
+cache-busting = true
+trees = [{ source = "static/web-assets", url-prefix = "/assets" }]
+files = []
+
+# tola help "[vendor]"
+[vendor]
+path = "vendor"
+
+# Writes site/build-mode.json so drafts render under `tola dev` but never get published.
+[[build.hooks.before-build]]
+enable = true
+name = "build-mode"
+command = ["sh", "scripts/build-mode.sh"]
+dev = "run"
+rerun-on = ["scripts/build-mode.sh"]
+generates = ["site/build-mode.json"]
