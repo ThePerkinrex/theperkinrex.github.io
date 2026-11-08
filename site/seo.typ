@@ -1,6 +1,6 @@
 #import "@tola/site:0.0.0": site
 #import "@tola/web:0.0.0": canonical, feed, head-metadata, open-graph, plain-text, sitemap
-#import "@tola/address:0.0.0": output-url
+#import "@tola/address:0.0.0": asset-url, output-url
 
 /// The head entries one document carries: charset, viewport, title, description, plus canonical
 /// and Open Graph entries for documents with an address.
@@ -15,11 +15,14 @@
     let url = output-url(page.output, origin: site.origin)
     let meta = page.source.meta
     let plain-title = if meta.title == none { "" } else { plain-text(meta.title) }
-    // Link previews (Open Graph) don't accept SVG, so SVG heroes fall back to the logo there.
-    let image = if meta.hero != none and not meta.hero.ends-with(".svg") {
-      site.origin + meta.hero
+    // Link previews (Open Graph) don't accept SVG: an SVG hero uses the PNG that
+    // scripts/og-images.sh renders from it, and pages without a hero use the wide logo.
+    let image = site.origin + if meta.hero == none {
+      asset-url("/og/logo-wide.png")
+    } else if meta.hero.ends-with(".svg") {
+      asset-url("/og/" + meta.hero.split("/").last().trim(".svg", at: end) + ".png")
     } else {
-      site.origin + "/assets/images/logo.png"
+      meta.hero
     }
     entries += canonical(url)
     if plain-title != "" {

@@ -528,7 +528,7 @@ summary {
 }
 .post-grid .placeholder {
 	/* The logo on its own teal, as a stand-in banner for posts without a hero image */
-	background: url("../images/logo.png") center / contain no-repeat, var(--logo-teal);
+	background: url("../images/logo-fg.svg") center / contain no-repeat, var(--logo-teal);
 	opacity: 0.9;
 }
 .post-grid a:hover img,

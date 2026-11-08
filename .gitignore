@@ -5,3 +5,4 @@
 /.tola-build.lock
 .DS_Store
 /site/build-mode.json
+/static/og-images/

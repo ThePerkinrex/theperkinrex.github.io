@@ -117,7 +117,7 @@ post puts it at the very end.
 Put image files in `static/web-assets/images/` and show them with `asset-image` and their
 `/assets/...` URL. The web page loads the published file and the PDF embeds it:
 
-#asset-image("/assets/images/logo.png", alt: "The site logo", width: 120, height: 120)
+#asset-image("/assets/images/logo.svg", alt: "The site logo", width: 120, height: 120)
 
 = Collapsible sections
 

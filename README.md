@@ -29,6 +29,10 @@ time. The extension needs `tola` on your `PATH` (or `tola.serverPath` set).
 | `site/` | templates: `layout.typ` (shell, header, footer), `page.typ` (home/post/page, footnotes, outline scoping), `components.typ` (admonitions, `csv-table`), `listing.typ` (blog index), `schema.typ` (allowed metadata fields) |
 | `static/web-assets/` | CSS, fonts, images and `scripts/site.js` (theme toggle, sticky-header title), served under `/assets/` |
 | `static/hero-sources/` | Typst sources for SVG post banners (not published); render with `typst compile --font-path static/typst-fonts --format svg <file>.typ static/web-assets/images/<file>.svg` |
+| `static/og-images/` | link-preview PNGs (gitignored), rendered from every SVG in `static/web-assets/images/` by the `og-images` hook and served under `/og/`; pages without a hero use `logo-wide.png` |
+| `static/favicon.ico`, `static/apple-touch-icon.png` | browser icons served at the site root; regenerate with `scripts/make-icons.sh` if `logo.svg` changes |
+| `scripts/og-images.sh` | before-build hook that renders the link-preview PNGs (needs `rsvg-convert`) |
+| `scripts/make-icons.sh` | renders `favicon.ico` (16/32/48px) and `apple-touch-icon.png` (180px) from `logo.svg` (needs `rsvg-convert` and ImageMagick) |
 | `scripts/build-mode.sh` | before-build hook that tells Typst whether this is `tola dev` (so drafts render) and the current year |
 | `scripts/typst-mark-font.py` | builds `static/web-assets/fonts/TypstMark.woff2`, the Typst wordmark as a font so `#typst` is real text on the web; rerun if the wordmark SVG changes (needs `fontTools` and `brotli`) |
 

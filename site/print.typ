@@ -10,7 +10,7 @@
 #import "selection.typ": pdf-output
 #import "theme.typ": body-font, mono-font, palette
 
-#let logo = "/static/web-assets/images/logo.png"
+#let logo = "/static/web-assets/images/logo.svg"
 
 #let format-date(d) = d.display("[month repr:short] [day padding:none], [year]")
 

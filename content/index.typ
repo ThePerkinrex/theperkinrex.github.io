@@ -8,7 +8,7 @@
 ))
 
 #html.div(class: "intro")[
-  #html.img(src: asset-url("/assets/images/logo.png"), alt: "", width: 120, height: 120)
+  #html.img(src: asset-url("/assets/images/logo.svg"), alt: "", width: 120, height: 120)
   #html.div[
     #title()
     #html.p(class: "tagline")[Tech-lover & developer]

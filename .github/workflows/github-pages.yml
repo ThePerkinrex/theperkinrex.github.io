@@ -67,6 +67,10 @@ jobs:
             cargo install tola --version "$TOLA_VERSION" --locked --root "$HOME/.local"
           fi
 
+      - name: Install rsvg-convert
+        # For the og-images hook, which renders link-preview PNGs from the SVG images
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends librsvg2-bin
+
       - name: Build
         run: |
           tola --version

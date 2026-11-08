@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- The logo on a wide teal banner (1.91:1, the link-preview size): logo-fg.svg scaled to 630/500, centred. -->
+  <rect width="1200" height="630" fill="#5DD2C2"/>
+  <g transform="translate(285 0) scale(1.26)">
+    <rect x="125" y="125" width="250" height="250" rx="32.5" fill="#4A86E8"/>
+    <path fill="#EBEBEB" d="M250 228.75 306.75 172 328 193.25 271.25 250 328 306.75 306.75 328 250 271.25 193.25 328 172 306.75 228.75 250 172 193.25 193.25 172Z"/>
+  </g>
+</svg>
