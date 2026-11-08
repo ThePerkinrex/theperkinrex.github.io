@@ -28,18 +28,44 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Install Tola
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           archive="tola-${TOLA_VERSION}-x86_64-unknown-linux-musl.tar.gz"
-          base="https://github.com/tola-rs/tola-ssg/releases/download/v${TOLA_VERSION}"
-          cd "$RUNNER_TEMP"
-          # GitHub's release download host occasionally answers 5xx; retry instead of failing the deploy.
-          fetch() { curl -fsSLO --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 20 "$1"; }
-          fetch "$base/$archive"
-          fetch "$base/checksums.txt"
-          grep " $archive\$" checksums.txt | sha256sum --check -
           mkdir -p "$HOME/.local/bin"
-          tar xzf "$archive" -C "$HOME/.local/bin" tola
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          cd "$RUNNER_TEMP"
+
+          # The release asset through the authenticated API (the plain github.com/…/releases/download
+          # URL has answered 504 from Actions runners), with a few attempts.
+          # Print where the download goes, for debugging. Query strings are cut: the storage
+          # redirect carries a temporary signed token, and these logs are public.
+          echo "Release:     https://github.com/tola-rs/tola-ssg/releases/tag/v${TOLA_VERSION}"
+          gh release view "v${TOLA_VERSION}" --repo tola-rs/tola-ssg --json assets \
+            --jq ".assets[] | select(.name == \"$archive\" or .name == \"checksums.txt\") | \"Asset:       \(.url)\nAsset (API): \(.apiUrl)\"" \
+            || echo "Could not list the release assets"
+          redirect=$(curl -sS -o /dev/null --connect-timeout 20 -w '%{http_code} %{redirect_url}' \
+            "https://github.com/tola-rs/tola-ssg/releases/download/v${TOLA_VERSION}/$archive" || true)
+          echo "Redirect:    ${redirect%%\?*}"
+
+          download() {
+            for attempt in 1 2 3; do
+              gh release download "v${TOLA_VERSION}" --repo tola-rs/tola-ssg --clobber \
+                --pattern "$archive" --pattern checksums.txt && return 0
+              echo "Download attempt $attempt failed; retrying in $((attempt * 10))s"
+              sleep $((attempt * 10))
+            done
+            return 1
+          }
+
+          if download; then
+            grep " $archive\$" checksums.txt | sha256sum --check -
+            tar xzf "$archive" -C "$HOME/.local/bin" tola
+          else
+            echo "::warning::Could not download the Tola release; building it from crates.io instead"
+            cargo install tola --version "$TOLA_VERSION" --locked --root "$HOME/.local"
+          fi
 
       - name: Build
         run: |
