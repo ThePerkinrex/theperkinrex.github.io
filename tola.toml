@@ -46,3 +46,9 @@ generates = ["site/build-mode.json"]
 [typst.fonts]
 paths = ["static/typst-fonts"]
 system = false
+
+# tola help "[formatter]" — used by `tola fmt` and the editor's format-on-save
+[formatter]
+indent = 2
+print-width = 100
+prose-wrap = "none"

@@ -1,7 +1,8 @@
 // Page metadata: every field a source may pass to `tola-meta`. Unknown fields are errors.
 
 #import "@tola/schema:0.0.0": (
-  date, describe, literal, nullable, one-or-many, optional, schema, timestamp, trim, union, url-path,
+  date, describe, literal, nullable, one-or-many, optional, schema, timestamp, trim, union,
+  url-path,
 )
 #import "@tola/site:0.0.0": site
 

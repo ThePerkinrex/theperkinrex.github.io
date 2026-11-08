@@ -72,7 +72,11 @@
   important: (title: "Important", icon: (circle, "M12 8v4", "M12 16h.01")),
   warning: (
     title: "Warning",
-    icon: ("m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3", "M12 9v4", "M12 17h.01"),
+    icon: (
+      "m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3",
+      "M12 9v4",
+      "M12 17h.01",
+    ),
   ),
   caution: (
     title: "Caution",
@@ -105,7 +109,10 @@
       fill: tint.transparentize(90%),
       stroke: (left: 3pt + tint),
       {
-        block(below: 0.6em, sticky: true, text(fill: tint, weight: "bold")[#icon-image(spec.icon, tint) #h(
+        block(below: 0.6em, sticky: true, text(fill: tint, weight: "bold")[#icon-image(
+            spec.icon,
+            tint,
+          ) #h(
             0.3em,
           ) #title])
         body
@@ -123,7 +130,12 @@
 /// An image from `static/web-assets/` by its `/assets/...` URL. The web page loads the published
 /// file; the PDF embeds it. `width`/`height` are CSS pixels.
 #let asset-image(url, alt: none, width: none, height: none) = by-target(
-  html: html.img(src: asset-url(url), alt: if alt == none { "" } else { alt }, width: width, height: height),
+  html: html.img(
+    src: asset-url(url),
+    alt: if alt == none { "" } else { alt },
+    width: width,
+    height: height,
+  ),
   paged: block(image(
     asset-source(url),
     alt: alt,

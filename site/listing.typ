@@ -34,7 +34,12 @@
 
 /// The `/blog/` index: every post, newest first.
 #let blog-index(posts) = {
-  shell("blog/index.html", "Blog", description: "Every post on " + site.title + ".", body-class: "blog")[
+  shell(
+    "blog/index.html",
+    "Blog",
+    description: "Every post on " + site.title + ".",
+    body-class: "blog",
+  )[
     #html.h1(class: "page-title")[Blog]
     #if posts.len() == 0 {
       html.p(class: "empty")[Nothing here yet. Check back soon!]

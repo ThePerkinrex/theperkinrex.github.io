@@ -122,7 +122,15 @@
 /// - body-class (string): a class on `<body>` for page-type specific styling.
 /// - header-title (none | string | content): shown in the sticky header after the page's `<h1>`
 ///   scrolls out of view.
-#let shell(output, title, description: none, page: none, body-class: "page", header-title: none, body) = {
+#let shell(
+  output,
+  title,
+  description: none,
+  page: none,
+  body-class: "page",
+  header-title: none,
+  body,
+) = {
   document(output, format: "html", title: title, description: description)[
     #html.html(lang: site.language.tag)[
       #html.head[
@@ -130,7 +138,12 @@
         #html.script(theme-init)
         #html.script("", src: asset-url("/assets/scripts/site.js"), defer: true)
         #html.link(rel: "icon", type: "image/png", href: asset-url("/assets/images/logo.png"))
-        #html.link(rel: "alternate", type: "application/rss+xml", title: site.title, href: output-url("feed.xml"))
+        #html.link(
+          rel: "alternate",
+          type: "application/rss+xml",
+          title: site.title,
+          href: output-url("feed.xml"),
+        )
         #html.link(rel: "stylesheet", href: asset-url("/assets/css/site.css"))
         #code-stylesheet()
       ]

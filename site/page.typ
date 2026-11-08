@@ -11,7 +11,11 @@
 #let footnote-ref(it) = context {
   let n = str(counter(footnote).get().first())
   // `role` has no typed parameter on `html.a`.
-  html.sup(class: "footnote-ref", html.elem("a", attrs: (href: "#fn-" + n, id: "fnref-" + n, role: "doc-noteref"))[#n])
+  html.sup(class: "footnote-ref", html.elem("a", attrs: (
+    href: "#fn-" + n,
+    id: "fnref-" + n,
+    role: "doc-noteref",
+  ))[#n])
 }
 
 #let footnote-list() = context {
@@ -23,7 +27,11 @@
           let n = str(i + 1)
           html.li(id: "fn-" + n)[
             #note.body
-            #html.elem("a", attrs: (href: "#fnref-" + n, role: "doc-backlink", "aria-label": "Back to text"))[↩]
+            #html.elem("a", attrs: (
+              href: "#fnref-" + n,
+              role: "doc-backlink",
+              "aria-label": "Back to text",
+            ))[↩]
           ]
         }
       ]

@@ -187,6 +187,8 @@ p {
 }
 .prose p {
 	margin-bottom: 1.5em;
+	text-align: justify;
+	hyphens: auto;
 }
 img {
 	max-width: 100%;

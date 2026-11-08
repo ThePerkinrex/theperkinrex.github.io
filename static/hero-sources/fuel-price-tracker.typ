@@ -7,7 +7,13 @@
 #let x0 = 300pt
 #let xf = 760pt // where the forecast starts
 #let x1 = 960pt
-#let price(t) = 230pt - 40pt * calc.sin(t * 2.3) - 22pt * calc.sin(t * 7.1 + 1) - 8pt * calc.sin(t * 19.0) + 30pt * t
+#let price(t) = (
+  230pt
+    - 40pt * calc.sin(t * 2.3)
+    - 22pt * calc.sin(t * 7.1 + 1)
+    - 8pt * calc.sin(t * 19.0)
+    + 30pt * t
+)
 #let n = 160
 #let xs(i, a, b) = a + (b - a) * i / n
 #let t-of(x) = (x - x0) / (x1 - x0) * 3
@@ -18,9 +24,15 @@
 #place(dx: x0 - 14pt, dy: 66pt, text(size: 22pt, weight: "bold", fill: ink(20%))[€/L])
 
 // History.
-#let hist = range(0, n + 1).map(i => { let x = xs(i, x0, xf); (x, price(t-of(x))) })
-#place(curve(stroke: (paint: white, thickness: 5pt, join: "round"),
-  curve.move(hist.first()), ..hist.slice(1).map(p => curve.line(p))))
+#let hist = range(0, n + 1).map(i => {
+  let x = xs(i, x0, xf)
+  (x, price(t-of(x)))
+})
+#place(curve(
+  stroke: (paint: white, thickness: 5pt, join: "round"),
+  curve.move(hist.first()),
+  ..hist.slice(1).map(p => curve.line(p)),
+))
 
 // Forecast: a straight-ish dashed line inside a widening band.
 #let y0 = price(t-of(xf))
@@ -28,11 +40,22 @@
 #let spread(x) = (x - xf) * 0.38
 #let m = 40
 #let fx(i) = xf + (x1 - xf) * i / m
-#place(polygon(fill: ink(78%),
+#place(polygon(
+  fill: ink(78%),
   ..range(0, m + 1).map(i => (fx(i), fc(fx(i)) - spread(fx(i)))),
-  ..range(0, m + 1).rev().map(i => (fx(i), fc(fx(i)) + spread(fx(i))))))
-#place(line(start: (xf, y0), end: (x1, fc(x1)), stroke: (paint: white, thickness: 5pt, dash: (12pt, 9pt), cap: "round")))
-#place(line(start: (xf, 90pt), end: (xf, 400pt), stroke: (paint: ink(60%), thickness: 1.5pt, dash: "dotted")))
+  ..range(0, m + 1).rev().map(i => (fx(i), fc(fx(i)) + spread(fx(i)))),
+))
+#place(line(start: (xf, y0), end: (x1, fc(x1)), stroke: (
+  paint: white,
+  thickness: 5pt,
+  dash: (12pt, 9pt),
+  cap: "round",
+)))
+#place(line(start: (xf, 90pt), end: (xf, 400pt), stroke: (
+  paint: ink(60%),
+  thickness: 1.5pt,
+  dash: "dotted",
+)))
 #place(dx: xf + 10pt, dy: 92pt, text(size: 18pt, fill: ink(25%))[forecast])
 
 // Station pins along the axis.
@@ -48,10 +71,16 @@
 #place(dx: 90pt, dy: 140pt, {
   place(rect(width: 110pt, height: 210pt, radius: (top: 14pt), stroke: 6pt + white))
   place(dx: 18pt, dy: 22pt, rect(width: 74pt, height: 52pt, radius: 4pt, fill: white))
-  place(dx: 26pt, dy: 30pt, text(size: 22pt, weight: "bold", font: "Atkinson Hyperlegible Mono", fill: rgb("#d4541a"))[1,62])
+  place(dx: 26pt, dy: 30pt, text(
+    size: 22pt,
+    weight: "bold",
+    font: "Atkinson Hyperlegible Mono",
+    fill: rgb("#d4541a"),
+  )[1,62])
   place(dx: -20pt, dy: 210pt, line(length: 150pt, stroke: 6pt + white))
   // Hose and nozzle.
-  place(curve(stroke: (paint: white, thickness: 6pt, cap: "round"),
+  place(curve(
+    stroke: (paint: white, thickness: 6pt, cap: "round"),
     curve.move((110pt, 100pt)),
     curve.cubic((150pt, 100pt), (150pt, 170pt), (155pt, 50pt)),
   ))

@@ -7,7 +7,10 @@
   set text(font: "Atkinson Hyperlegible", fill: white)
   place(rect(width: W, height: H, fill: tiling(
     size: (24pt, 24pt),
-    place(dx: 12pt - 1.6pt, dy: 12pt - 1.6pt, circle(radius: 1.6pt, fill: white.transparentize(88%))),
+    place(dx: 12pt - 1.6pt, dy: 12pt - 1.6pt, circle(
+      radius: 1.6pt,
+      fill: white.transparentize(88%),
+    )),
   )))
   body
 }

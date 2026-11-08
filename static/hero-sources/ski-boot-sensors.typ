@@ -25,21 +25,31 @@
     let swing = 80pt * calc.sin(t * 3 * 2 * calc.pi) * (1 - t) * (0.5 + t)
     (x0 + (x1 - x0) * t + swing * 0.35, y0 + (y1 - y0) * t - swing + offset)
   })
-  place(curve(stroke: (paint: paint, thickness: 3.5pt, join: "round", cap: "round"),
-    curve.move(pts.first()), ..pts.slice(1).map(p => curve.line(p))))
+  place(curve(
+    stroke: (paint: paint, thickness: 3.5pt, join: "round", cap: "round"),
+    curve.move(pts.first()),
+    ..pts.slice(1).map(p => curve.line(p)),
+  ))
 }
 #track(0pt, ink(40%))
 #track(12pt, ink(60%))
 
 #place(dx: X, dy: Y, image("skier-white.svg", width: size))
 
-#place(bottom + right, dx: -16pt, dy: -12pt,
-  text(size: 12pt, fill: ink(45%))[Skier icon: Font Awesome Free, CC BY 4.0])
+#place(bottom + right, dx: -16pt, dy: -12pt, text(
+  size: 12pt,
+  fill: ink(45%),
+)[Skier icon: Font Awesome Free, CC BY 4.0])
 
 // Sensor pings from the front of the boot, ahead of the skier.
 #let (bx, by) = at(0.53, 0.71)
 #for (i, r) in (30pt, 50pt, 70pt).map(r => r * (size / 360pt)).enumerate() {
-  place(dx: bx, dy: by, curve(stroke: (paint: ink(10% + i * 25%), thickness: 4pt, cap: "round"),
+  place(dx: bx, dy: by, curve(
+    stroke: (paint: ink(10% + i * 25%), thickness: 4pt, cap: "round"),
     curve.move((r * calc.cos(-35deg), r * calc.sin(-35deg))),
-    ..range(1, 21).map(k => { let a = -35deg + k * 3deg; curve.line((r * calc.cos(a), r * calc.sin(a))) })))
+    ..range(1, 21).map(k => {
+      let a = -35deg + k * 3deg
+      curve.line((r * calc.cos(a), r * calc.sin(a)))
+    }),
+  ))
 }

@@ -16,7 +16,9 @@
     let meta = page.source.meta
     let plain-title = if meta.title == none { "" } else { plain-text(meta.title) }
     // Link previews (Open Graph) don't accept SVG, so SVG heroes fall back to the logo there.
-    let image = if meta.hero != none and not meta.hero.ends-with(".svg") { site.origin + meta.hero } else {
+    let image = if meta.hero != none and not meta.hero.ends-with(".svg") {
+      site.origin + meta.hero
+    } else {
       site.origin + "/assets/images/logo.png"
     }
     entries += canonical(url)
@@ -46,7 +48,9 @@
       .map(post => (
         target: post.output,
         published: rfc3339(post.source.meta.date),
-        updated: if post.source.meta.updated == none { none } else { rfc3339(post.source.meta.updated) },
+        updated: if post.source.meta.updated == none { none } else {
+          rfc3339(post.source.meta.updated)
+        },
         summary: post.source.meta.description,
         content: (document: post.output, id: "post-body"),
       )),

@@ -15,7 +15,9 @@
 #let format-date(d) = d.display("[month repr:short] [day padding:none], [year]")
 
 /// An absolute URL for a site route, so links still work once the PDF is downloaded.
-#let absolute(route) = if site.origin == none { route } else { route-url(route, origin: site.origin) }
+#let absolute(route) = if site.origin == none { route } else {
+  route-url(route, origin: site.origin)
+}
 
 #let pill(body, fill: palette.teal-soft, color: palette.heading) = box(
   inset: (x: 0.7em, y: 0.25em),
@@ -37,7 +39,7 @@
   let here-doc = current-document().location
 
   set text(font: body-font, size: 11pt, fill: palette.text)
-  set par(leading: 0.75em, spacing: 1.3em)
+  set par(leading: 0.75em, spacing: 1.3em, justify: true)
   set list(indent: 0.6em)
   set enum(indent: 0.6em)
 
@@ -86,7 +88,9 @@
 
   // Tables: rules under each row, a teal one under the header.
   set table(
-    stroke: (_, y) => (bottom: if y == 0 { 1.5pt + palette.logo-teal } else { 0.75pt + palette.line }),
+    stroke: (_, y) => (
+      bottom: if y == 0 { 1.5pt + palette.logo-teal } else { 0.75pt + palette.line },
+    ),
     inset: (x: 0.6em, y: 0.5em),
     align: left,
   )
@@ -138,7 +142,8 @@
     set text(size: 8.5pt, fill: palette.muted)
     grid(
       columns: (1fr, auto),
-      if url != none { link(url, url) }, [#counter(page).display() / #counter(page).final().first()],
+      if url != none { link(url, url) },
+      [#counter(page).display() / #counter(page).final().first()],
     )
   },
   // The web header's teal top border, and the page's soft teal wash behind the first page.
@@ -158,7 +163,9 @@
 #let post-pdf(post) = {
   let meta = post.source.meta
   let url = if site.origin == none { none } else { output-url(post.output, origin: site.origin) }
-  let authors = if meta.authors == none { () } else if type(meta.authors) == array { meta.authors } else {
+  let authors = if meta.authors == none { () } else if type(meta.authors) == array {
+    meta.authors
+  } else {
     (meta.authors,)
   }
   let author-names = authors.map(a => if type(a) == str { a } else { a.name })

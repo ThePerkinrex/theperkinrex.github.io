@@ -13,7 +13,11 @@
 // Rows and time ticks.
 #for (name, y) in rows {
   place(line(start: (x0, y), end: (x1, y), stroke: 1.5pt + ink(70%)))
-  place(dx: 0pt, dy: y - 9pt, box(width: x0 - 24pt, align(right, text(size: 20pt, fill: ink(30%), name))))
+  place(dx: 0pt, dy: y - 9pt, box(width: x0 - 24pt, align(right, text(
+    size: 20pt,
+    fill: ink(30%),
+    name,
+  ))))
 }
 #for i in range(0, 14) {
   let x = x0 + i * 60pt
@@ -28,7 +32,11 @@
   place(line(start: (dep, hub), end: (dep + (450pt - hub) / s, 450pt), stroke: 5pt + paint))
 }
 // Buses: shallow, from the stop down to the hub.
-#let bus(arr, paint) = place(line(start: (arr - 200pt, 110pt), end: (arr, hub), stroke: (paint: paint, thickness: 4pt, cap: "round")))
+#let bus(arr, paint) = place(line(start: (arr - 200pt, 110pt), end: (arr, hub), stroke: (
+  paint: paint,
+  thickness: 4pt,
+  cap: "round",
+)))
 
 #train(230pt, 245pt, ink(45%))
 #train(500pt, 560pt, white) // held: waits for the bus
@@ -42,7 +50,11 @@
 #place(dx: 470pt, dy: hub + 26pt, text(size: 18pt)[held])
 
 // The one that doesn't: a dashed bracket over the gap.
-#place(line(start: (815pt, hub - 26pt), end: (860pt, hub - 26pt), stroke: (paint: white, thickness: 2pt, dash: "dashed")))
+#place(line(start: (815pt, hub - 26pt), end: (860pt, hub - 26pt), stroke: (
+  paint: white,
+  thickness: 2pt,
+  dash: "dashed",
+)))
 #place(line(start: (815pt, hub - 34pt), end: (815pt, hub - 18pt), stroke: 2pt + white))
 #place(line(start: (860pt, hub - 34pt), end: (860pt, hub - 18pt), stroke: 2pt + white))
 #place(dx: 868pt, dy: hub - 40pt, text(size: 18pt, fill: ink(20%))[missed])
