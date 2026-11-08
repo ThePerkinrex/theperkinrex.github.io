@@ -2,7 +2,28 @@
 
 #import "@tola/address:0.0.0": asset-url, output-url
 #import "@tola/site:0.0.0": site
+#import "@preview/wordometer:0.1.6": word-count-of
 #import "layout.typ": format-date, shell
+
+/// Average adult silent-reading speed, in words per minute.
+#let words-per-minute = 220
+
+/// Words in a post's body, not counting code blocks (inline code still counts) or anything
+/// wordometer skips by default (maths, citations, images). Text produced inside `context`, such
+/// as components built on `by-target`, is opaque and goes uncounted.
+#let post-word-count(post) = word-count-of(
+  include post.source.file,
+  exclude: (raw.where(block: true),),
+).words
+
+/// " · N min read" for a post (at least one minute), to follow its date. Nothing for an empty
+/// post, such as a draft stub.
+#let read-time(post) = {
+  let words = post-word-count(post)
+  if words == 0 { return none }
+  let minutes = calc.max(1, calc.round(words / words-per-minute))
+  [ · #html.span(class: "read-time", title: str(words) + " words")[#minutes min read]]
+}
 
 #let post-card(post) = {
   let meta = post.source.meta
@@ -17,7 +38,7 @@
         #meta.title
         #if meta.draft { html.span(class: "draft-badge")[Draft] }
       ]
-      #html.p(class: "date")[#format-date(meta.date)]
+      #html.p(class: "date")[#format-date(meta.date)#read-time(post)]
       #if meta.description != none and meta.description != site.description {
         html.p(class: "description")[#meta.description]
       }

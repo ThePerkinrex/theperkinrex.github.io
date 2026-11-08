@@ -229,34 +229,19 @@
     ))#h(-0.15em)T#h(-0.1667em)#box(move(dy: 0.215em)[E])#h(-0.125em)X]),
 )
 
-/// The official Typst wordmark's outlines (the hero art's copy), drawn in the current text colour.
-/// Its viewBox is 91×35 with the baseline 24.41 units down and an x-height of about 20 units.
-#let typst-wordmark-paths = (
-  read("/static/hero-sources/typst-wordmark-white.svg")
-    .matches(regex("\\bd=\"([^\"]+)\""))
-    .map(m => m.captures.first())
-)
-
 /// The Typst wordmark, sized so its x-height matches the body font's and its baseline sits on the
-/// line's. The HTML rendering is sized in site.css (`.typst-mark`).
+/// line's. It is the text "Typst" set in a font made of the wordmark's outlines, built by
+/// `scripts/typst-mark-font.py` (`fonts/TypstMark.woff2` with `.typst-mark` in site.css for the
+/// web, `typst-fonts/TypstMark.otf` for the PDF), so reader mode, copy-paste, search and screen
+/// readers see the word.
 #let typst = by-target(
-  // The <span> keeps the <svg> inline: on its own Typst treats it as a block and ends the paragraph.
-  html: html.elem("span", attrs: (class: "typst-mark", role: "img", aria-label: "Typst"), html.elem(
-    "svg",
-    attrs: (viewBox: "0 0 91 35", fill: "currentColor", "aria-hidden": "true"),
-    typst-wordmark-paths.map(d => html.elem("path", attrs: (d: d))).join(),
-  )),
-  paged: context {
-    let fill = if type(text.fill) == color { text.fill } else { black }
-    let body = typst-wordmark-paths.map(d => "<path d=\"" + d + "\"/>").join()
-    let svg = (
-      "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 91 35\" fill=\""
-        + fill.to-hex()
-        + "\">"
-        + body
-        + "</svg>"
-    )
-    // 10.59 of the 35 units hang below the baseline.
-    box(baseline: 30.26%, image(bytes(svg), format: "svg", height: 0.87em, alt: "Typst"))
-  },
+  html: html.span(class: "typst-mark")[Typst],
+  // The font has one weight and no italic; Typst would otherwise fake bold or slant to match.
+  paged: box(text(
+    font: "Typst Mark",
+    weight: "regular",
+    style: "normal",
+    hyphenate: false,
+    tracking: 0pt,
+  )[Typst]),
 )

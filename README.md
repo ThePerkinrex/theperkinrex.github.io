@@ -30,6 +30,7 @@ time. The extension needs `tola` on your `PATH` (or `tola.serverPath` set).
 | `static/web-assets/` | CSS, fonts, images and `scripts/site.js` (theme toggle, sticky-header title), served under `/assets/` |
 | `static/hero-sources/` | Typst sources for SVG post banners (not published); render with `typst compile --font-path static/typst-fonts --format svg <file>.typ static/web-assets/images/<file>.svg` |
 | `scripts/build-mode.sh` | before-build hook that tells Typst whether this is `tola dev` (so drafts render) and the current year |
+| `scripts/typst-mark-font.py` | builds `static/web-assets/fonts/TypstMark.woff2`, the Typst wordmark as a font so `#typst` is real text on the web; rerun if the wordmark SVG changes (needs `fontTools` and `brotli`) |
 
 ## Posts
 

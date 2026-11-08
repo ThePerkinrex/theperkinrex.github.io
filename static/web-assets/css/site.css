@@ -20,6 +20,15 @@
 	font-display: swap;
 	unicode-range: U+0041, U+0045, U+004C, U+0054, U+0058;
 }
+/* The Typst wordmark's outlines as the letters T/t, y, p, s, for `#typst` (scripts/typst-mark-font.py). */
+@font-face {
+	font-family: "Typst Mark";
+	src: url("../fonts/TypstMark.woff2") format("woff2");
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0054, U+0070, U+0073, U+0074, U+0079;
+}
 @font-face {
 	font-family: "Atkinson";
 	src: url("../fonts/AtkinsonHyperlegible-Regular.woff2") format("woff2");
@@ -657,12 +666,14 @@ summary {
 	margin-left: -0.1667em;
 	margin-right: -0.125em;
 }
-/* `#typst`: x-height matched to the body font, baseline on the line's. */
-.typst-mark svg {
-	display: inline-block;
-	height: 0.87em;
-	width: auto;
-	vertical-align: -0.264em;
+/* `#typst`: the wordmark font already matches the body font's x-height and baseline. It has one
+   weight and no italic, so the browser must not fake either. */
+.typst-mark {
+	font-family: "Typst Mark", var(--font-body);
+	font-style: normal;
+	font-synthesis: none;
+	letter-spacing: normal;
+	white-space: nowrap;
 }
 .admonition {
 	--tint: var(--logo-blue);

@@ -1,7 +1,7 @@
 #import "@tola/address:0.0.0": asset-url, output-url
 #import "@tola/code:0.0.0": code-themes, render-code
 #import "layout.typ": format-date, shell
-#import "listing.typ": post-list
+#import "listing.typ": post-list, read-time
 #import "selection.typ": is-post, pdf-output
 #import "components.typ": code-options, icon, line-number, line-number-digits
 #import "@tola/document:0.0.0": current-document
@@ -92,7 +92,7 @@
       #html.div(class: "prose")[
         #html.div(class: "title")[
           #html.div(class: "date")[
-            #format-date(meta.date)
+            #format-date(meta.date)#read-time(page)
             #if meta.updated != none {
               html.div(class: "last-updated-on")[Last updated on #format-date(meta.updated)]
             }
