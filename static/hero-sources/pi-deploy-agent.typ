@@ -1,91 +1,62 @@
-// Hero for /blog/pi-deploy-agent/: CI builds and seals a bundle, it travels over the tailnet to a
-// Raspberry Pi, and under the Pi `current` points at the newest release.
+// Hero for /blog/pi-deploy-agent/: the release as a parcel. A shipping label addressed to the Pi
+// over the tailnet, a tamper seal (the HMAC) and a "no assembly required" stamp, because the Pi
+// never compiles anything.
 // Render: typst compile --font-path static/typst-fonts --format svg static/hero-sources/pi-deploy-agent.typ static/web-assets/images/pi-deploy-agent.svg
 #import "_common.typ": *
 #show: hero.with(rgb("#1f7a54"), rgb("#1e293b"))
 
-#let mid = 210pt
+#let mono = "Atkinson Hyperlegible Mono"
+#let ink-dark = rgb("#1e293b")
+#let card = rgb("#c9a26b") // cardboard
+#let tape = rgb("#e8cf9f")
+#let accent = rgb("#c2410c")
 
-// The tailnet: a dotted line from CI to the Pi.
-#place(line(start: (250pt, mid), end: (690pt, mid), stroke: (
-  paint: ink(40%),
-  thickness: 4pt,
-  dash: (2pt, 12pt),
-  cap: "round",
-)))
-
-// CI: a box with a gear.
-#let gear(r) = {
-  for i in range(0, 8) {
-    place(dx: -7pt, dy: -r - 8pt, rotate(i * 45deg, origin: center + bottom, reflow: false, box(
-      width: 14pt,
-      height: r + 8pt,
-      place(rect(width: 14pt, height: 14pt, radius: 2pt, fill: white)),
-    )))
-  }
-  place(dx: -r, dy: -r, circle(radius: r, fill: white))
-  place(dx: -r * 0.42, dy: -r * 0.42, circle(radius: r * 0.42, fill: rgb("#1d6b4c")))
+// Motion lines: it's travelling.
+#for (i, y) in (150pt, 210pt, 270pt, 330pt).enumerate() {
+  place(line(start: (60pt + i * 18pt, y), end: (200pt + i * 6pt, y), stroke: (paint: ink(55% + i * 8%), thickness: 6pt, cap: "round")))
 }
-#place(dx: 70pt, dy: mid - 90pt, rect(
-  width: 180pt,
-  height: 180pt,
-  radius: 18pt,
+
+// The parcel, tilted a little.
+#place(dx: 250pt, dy: 55pt, rotate(-4deg, reflow: false, {
+  place(rect(width: 560pt, height: 380pt, radius: 10pt, fill: card, stroke: 5pt + white))
+  place(dx: 250pt, rect(width: 60pt, height: 380pt, fill: tape))
+
+  // The label.
+  place(dx: 40pt, dy: 40pt, {
+    set text(fill: ink-dark)
+    place(rect(width: 300pt, height: 300pt, radius: 6pt, fill: white))
+    place(dx: 20pt, dy: 18pt, text(size: 14pt, weight: "bold", tracking: 1.5pt)[FROM])
+    place(dx: 20pt, dy: 38pt, text(font: mono, size: 18pt)[ci runner, aarch64])
+    place(dx: 20pt, dy: 70pt, line(length: 260pt, stroke: 2pt + ink-dark))
+    place(dx: 20pt, dy: 84pt, text(size: 14pt, weight: "bold", tracking: 1.5pt)[TO])
+    place(dx: 20pt, dy: 104pt, text(font: mono, size: 26pt, weight: "bold")[pi])
+    place(dx: 20pt, dy: 138pt, text(font: mono, size: 18pt)[via the tailnet])
+    place(dx: 20pt, dy: 170pt, line(length: 260pt, stroke: 2pt + ink-dark))
+    place(dx: 20pt, dy: 184pt, text(size: 14pt, weight: "bold", tracking: 1.5pt)[CONTENTS])
+    place(dx: 20pt, dy: 204pt, text(font: mono, size: 18pt)[e41d07.tar.zst])
+    // Barcode.
+    let widths = (3, 1, 2, 1, 1, 3, 2, 1, 3, 1, 1, 2, 1, 3, 1, 2, 2, 1, 1, 3, 1, 2, 1, 1, 3, 2, 1, 2, 1, 3)
+    let x = 20pt
+    for (i, w) in widths.enumerate() {
+      if calc.even(i) { place(dx: x, dy: 240pt, rect(width: w * 2.6pt, height: 42pt, fill: ink-dark)) }
+      x += w * 2.6pt + 1.6pt
+    }
+  })
+
+  // The tamper seal.
+  place(dx: 410pt, dy: 52pt, {
+    place(circle(radius: 52pt, fill: accent, stroke: 4pt + white))
+    place(box(width: 104pt, height: 104pt, align(center + horizon, text(fill: white, weight: "bold")[
+      #text(size: 22pt)[HMAC] \
+      #text(size: 13pt, tracking: 1pt)[SEALED]
+    ])))
+  })
+}))
+
+// The stamp, straight across, on top.
+#place(dx: 620pt, dy: 300pt, rotate(-14deg, reflow: false, box(
+  inset: (x: 18pt, y: 12pt),
+  radius: 6pt,
   stroke: 5pt + white,
-))
-#place(dx: 160pt, dy: mid - 10pt, gear(36pt))
-#place(dx: 70pt, dy: mid + 104pt, box(width: 180pt, align(center, text(
-  size: 22pt,
-  fill: ink(20%),
-)[CI])))
-
-// The sealed bundle, mid-flight.
-#place(dx: 400pt, dy: mid - 55pt, {
-  place(rect(width: 130pt, height: 110pt, radius: 6pt, fill: rgb("#244a3e"), stroke: 5pt + white))
-  place(dx: 0pt, dy: 30pt, line(length: 130pt, stroke: 3pt + ink(30%)))
-  place(dx: 55pt, dy: 0pt, rect(width: 20pt, height: 30pt, fill: ink(30%)))
-  place(dx: 75pt, dy: 52pt, circle(radius: 34pt, fill: rgb("#c2410c"), stroke: 3pt + white))
-  place(dx: 75pt, dy: 52pt, box(width: 68pt, height: 68pt, align(center + horizon, text(
-    size: 15pt,
-    weight: "bold",
-  )[HMAC])))
-})
-#place(dx: 400pt, dy: mid + 72pt, box(width: 130pt, align(center, text(
-  size: 18pt,
-  font: "Atkinson Hyperlegible Mono",
-  fill: ink(20%),
-)[.tar.zst])))
-
-// The Pi: a board with a GPIO header, a chip and ports.
-#place(dx: 690pt, dy: mid - 90pt, {
-  place(rect(width: 260pt, height: 170pt, radius: 12pt, fill: rgb("#244a3e"), stroke: 5pt + white))
-  for i in range(0, 20) {
-    for j in range(0, 2) {
-      place(dx: 22pt + i * 11pt, dy: 14pt + j * 11pt, circle(radius: 3pt, fill: ink(20%)))
-    }
-  }
-  place(dx: 70pt, dy: 66pt, rect(width: 62pt, height: 62pt, radius: 4pt, fill: white))
-  place(dx: 150pt, dy: 76pt, rect(width: 40pt, height: 40pt, radius: 3pt, fill: ink(50%)))
-  for k in range(0, 3) {
-    place(dx: 236pt, dy: 46pt + k * 40pt, rect(
-      width: 36pt,
-      height: 30pt,
-      radius: 3pt,
-      fill: ink(20%),
-    ))
-  }
-  for c in (14pt, 230pt) {
-    for r in (14pt, 140pt) {
-      place(dx: c - 6pt, dy: r + 4pt, circle(radius: 6pt, stroke: 2pt + ink(40%)))
-    }
-  }
-})
-
-// releases/ under the Pi.
-#place(dx: 720pt, dy: mid + 100pt, {
-  set text(font: "Atkinson Hyperlegible Mono", size: 19pt)
-  set par(leading: 0.5em)
-  [#text(fill: ink(25%))[releases/] \
-    #text(fill: ink(50%))[├ a3f9c1/] \
-    #text(fill: ink(50%))[├ 7be210/] \
-    └ e41d07/ #text(fill: rgb("#fdba74"), weight: "bold")[← current]]
-})
+  text(size: 24pt, weight: "bold", tracking: 2pt, fill: white)[PREBUILT \ #text(size: 17pt, tracking: 1.5pt)[NO ASSEMBLY REQUIRED]],
+)))

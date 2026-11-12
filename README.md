@@ -11,6 +11,10 @@ tola check    # production build + link checks, without writing public/
 tola build    # write the production site to public/
 ```
 
+The build hooks (`scripts/*.sh`) need `sh` and `rsvg-convert` on your `PATH`. On Windows, add
+`C:\Program Files\Git\bin` (Git for Windows' `sh`) to your `PATH` and `scoop install resvg`:
+`og-images.sh` uses `resvg` when `rsvg-convert` is missing.
+
 ### Editor
 
 Use the [Tola VS Code extension](https://marketplace.visualstudio.com/items?itemName=tola.tola)

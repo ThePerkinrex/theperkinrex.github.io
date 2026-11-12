@@ -1,0 +1,2 @@
+# Shell scripts keep LF endings on Windows checkouts too, or sh fails on the stray carriage returns
+*.sh text eol=lf
