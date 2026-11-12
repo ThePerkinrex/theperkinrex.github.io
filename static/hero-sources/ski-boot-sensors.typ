@@ -1,55 +1,69 @@
-// Hero for /blog/ski-boot-sensors/: a skier carving down the slope, their S-shaped tracks behind
-// them, and the boot sensors pinging.
+// Hero for /blog/ski-boot-sensors/: one run's GPS fixes zig-zagging down a contour map of the slope,
+// the finish pinging, and a card with the run's made-up stats and edge angle per turn from the boots.
 // Render: typst compile --font-path static/typst-fonts --format svg static/hero-sources/ski-boot-sensors.typ static/web-assets/images/ski-boot-sensors.svg
-// The skier is Font Awesome Free's `person-skiing` (solid; CC BY 4.0, https://fontawesome.com/license/free),
-// recoloured white, its viewBox grown from 512 to 552 tall because the ski's underside reaches y ≈ 547 and the
-// original clips it; the licence needs the credit drawn in the bottom-right corner.
 #import "_common.typ": *
 #show: hero.with(rgb("#4aa3df"), rgb("#1d3f7a"))
+#let navy = rgb("#1d3f7a")
 
-
-
-// The skier; positions below are fractions of the icon's box.
-#let size = 280pt
-#let (X, Y) = (640pt, 170pt)
-#let at(fx, fy) = (X + fx * size, Y + fy * size)
-#let tail = at(0.035, 0.535)
-
-// Tracks: a pair of S-curves from the top left that settle into the skis' tail.
-#let track(offset, paint) = {
-  let (x0, y0) = (30pt, 70pt)
-  let (x1, y1) = tail
-  let n = 200
-  let pts = range(0, n + 1).map(i => {
-    let t = i / n
-    let swing = 80pt * calc.sin(t * 3 * 2 * calc.pi) * (1 - t) * (0.5 + t)
-    (x0 + (x1 - x0) * t + swing * 0.35, y0 + (y1 - y0) * t - swing + offset)
+// Contour lines: wavy, running across the fall line, every fifth one heavier.
+#for k in range(-8, 44) {
+  let major = calc.rem(k + 20, 5) == 0
+  let pts = range(0, 121).map(i => {
+    let x = -20pt + i * 9pt
+    let u = x / 1pt
+    (x, k * 24pt + 26pt * calc.sin(u / 170 + k * 0.22) + 12pt * calc.sin(u / 61 - k * 0.5) - x * 0.42 + 300pt)
   })
   place(curve(
-    stroke: (paint: paint, thickness: 3.5pt, join: "round", cap: "round"),
+    stroke: (paint: ink(if major { 72% } else { 87% }), thickness: if major { 2.2pt } else { 1.4pt }, join: "round"),
     curve.move(pts.first()),
     ..pts.slice(1).map(p => curve.line(p)),
   ))
 }
-#track(0pt, ink(40%))
-#track(12pt, ink(60%))
 
-#place(dx: X, dy: Y, image("skier-white.svg", width: size))
-
-#place(bottom + right, dx: -16pt, dy: -12pt, text(
-  size: 12pt,
-  fill: ink(45%),
-)[Skier icon: Font Awesome Free, CC BY 4.0])
-
-// Sensor pings from the front of the boot, ahead of the skier.
-#let (bx, by) = at(0.53, 0.71)
-#for (i, r) in (30pt, 50pt, 70pt).map(r => r * (size / 360pt)).enumerate() {
-  place(dx: bx, dy: by, curve(
-    stroke: (paint: ink(10% + i * 25%), thickness: 4pt, cap: "round"),
-    curve.move((r * calc.cos(-35deg), r * calc.sin(-35deg))),
-    ..range(1, 21).map(k => {
-      let a = -35deg + k * 3deg
-      curve.line((r * calc.cos(a), r * calc.sin(a)))
-    }),
-  ))
+// The run: from the start down to the finish, swinging across the fall line.
+#let (sx, sy) = (110pt, 70pt)
+#let (ex, ey) = (600pt, 420pt)
+#let (dx, dy) = ((ex - sx) / 1pt, (ey - sy) / 1pt)
+#let len = calc.sqrt(dx * dx + dy * dy)
+#let path(t) = {
+  let swing = 70pt * calc.sin(t * 4.5 * 2 * calc.pi) * (0.6 + 0.4 * t)
+  (sx + (ex - sx) * t - swing * dy / len, sy + (ey - sy) * t + swing * dx / len)
 }
+#let fine = range(0, 301).map(i => path(i / 300))
+#place(curve(
+  stroke: (paint: ink(50%), thickness: 3pt, join: "round", cap: "round"),
+  curve.move(fine.first()),
+  ..fine.slice(1).map(p => curve.line(p)),
+))
+// One dot per GPS fix.
+#for i in range(0, 61) {
+  let (x, y) = path(i / 60)
+  place(dx: x - 4pt, dy: y - 4pt, circle(radius: 4pt, fill: white))
+}
+
+// Start, and the finish pinging.
+#place(dx: sx - 9pt, dy: sy - 9pt, rect(width: 18pt, height: 18pt, radius: 3pt, fill: white))
+#place(dx: ex - 9pt, dy: ey - 9pt, circle(radius: 9pt, fill: white))
+#for (i, r) in (20pt, 32pt, 44pt).enumerate() {
+  place(dx: ex - r, dy: ey - r, circle(radius: r, stroke: 3pt + ink(20% + i * 25%)))
+}
+
+// The run's card, with the edge angle of each turn; the steepest one picked out.
+#place(dx: 700pt, dy: 140pt, {
+  set text(fill: navy)
+  place(rect(width: 260pt, height: 196pt, radius: 14pt, fill: white))
+  place(dx: 20pt, dy: 16pt, text(size: 16pt, fill: navy.transparentize(30%))[Run 7 · 1.4 km · 2:41])
+  place(dx: 20pt, dy: 38pt, text(size: 24pt, weight: "bold")[9 turns])
+  place(dx: 128pt, dy: 46pt, text(size: 14pt, fill: navy.transparentize(25%))[edge angle per turn])
+  let angles = (31, 38, 44, 47, 52, 49, 41, 36, 45)
+  let top = calc.max(..angles)
+  for (j, a) in angles.enumerate() {
+    let h = 70pt * a / 55
+    place(dx: 20pt + j * 25pt, dy: 172pt - h, rect(
+      width: 17pt,
+      height: h,
+      radius: 3pt,
+      fill: if a == top { navy } else { navy.transparentize(55%) },
+    ))
+  }
+})
