@@ -49,11 +49,19 @@
 #let tick-at(p, a, b, paint, len: 14pt, w: 6pt, side: 1) = {
   let (ux, uy, _) = unit(a, b)
   let (nx, ny) = (-uy * side, ux * side)
-  place(line(start: p, end: (p.at(0) + nx * len, p.at(1) + ny * len), stroke: (paint: paint, thickness: w, cap: "butt")))
+  place(line(start: p, end: (p.at(0) + nx * len, p.at(1) + ny * len), stroke: (
+    paint: paint,
+    thickness: w,
+    cap: "butt",
+  )))
 }
 #let tick(a, b, t, ..args) = tick-at(lerp(a, b, t), a, b, ..args)
 
-#let ring(p, r: 11pt, w: 5pt) = place(dx: p.at(0) - r, dy: p.at(1) - r, circle(radius: r, fill: white, stroke: w + navy))
+#let ring(p, r: 11pt, w: 5pt) = place(dx: p.at(0) - r, dy: p.at(1) - r, circle(
+  radius: r,
+  fill: white,
+  stroke: w + navy,
+))
 // An interchange: two rings joined by a capsule.
 #let interchange(p, q, r: 13pt, w: 5pt) = {
   place(line(start: p, end: q, stroke: (paint: navy, thickness: 2 * r, cap: "round")))
@@ -73,13 +81,28 @@
 ))
 #let bus-glyph = {
   place(dx: 7pt, dy: 7pt, rect(width: 20pt, height: 17pt, radius: 3pt, fill: navy))
-  place(dx: 10pt, dy: 10pt, rect(width: 14pt, height: 6pt, radius: 1pt, fill: white.transparentize(10%)))
+  place(dx: 10pt, dy: 10pt, rect(
+    width: 14pt,
+    height: 6pt,
+    radius: 1pt,
+    fill: white.transparentize(10%),
+  ))
   place(dx: 9pt, dy: 23pt, rect(width: 4pt, height: 4pt, fill: navy))
   place(dx: 21pt, dy: 23pt, rect(width: 4pt, height: 4pt, fill: navy))
 }
 #let train-glyph = {
-  place(dx: 8pt, dy: 6pt, rect(width: 18pt, height: 18pt, radius: (top: 6pt, bottom: 2pt), fill: navy))
-  place(dx: 11pt, dy: 9pt, rect(width: 12pt, height: 6pt, radius: 1pt, fill: white.transparentize(10%)))
+  place(dx: 8pt, dy: 6pt, rect(
+    width: 18pt,
+    height: 18pt,
+    radius: (top: 6pt, bottom: 2pt),
+    fill: navy,
+  ))
+  place(dx: 11pt, dy: 9pt, rect(
+    width: 12pt,
+    height: 6pt,
+    radius: 1pt,
+    fill: white.transparentize(10%),
+  ))
   place(line(start: (10pt, 28pt), end: (24pt, 28pt), stroke: 2.5pt + navy))
 }
 
@@ -127,7 +150,10 @@
 
 // The hub, pinging.
 #for (i, r) in (34pt, 50pt).enumerate() {
-  place(dx: hub.at(0) - r, dy: hub.at(1) - r, circle(radius: r, stroke: 3pt + accent.transparentize(35% + i * 30%)))
+  place(dx: hub.at(0) - r, dy: hub.at(1) - r, circle(
+    radius: r,
+    stroke: 3pt + accent.transparentize(35% + i * 30%),
+  ))
 }
 #interchange(hub, hub-bus)
 

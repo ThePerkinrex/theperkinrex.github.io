@@ -64,6 +64,9 @@
   show footnote: footnote-ref
   // Wide tables scroll inside their own box instead of widening the page on phones.
   show table: it => html.div(class: "table-scroll", it)
+  // The footnote counter runs across the whole site Bundle; restart it so each page's references
+  // match `footnote-list`, which numbers this page's notes from 1.
+  counter(footnote).update(0)
   body
   footnote-list()
 }

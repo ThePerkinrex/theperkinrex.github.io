@@ -11,10 +11,21 @@
   let pts = range(0, 121).map(i => {
     let x = -20pt + i * 9pt
     let u = x / 1pt
-    (x, k * 24pt + 26pt * calc.sin(u / 170 + k * 0.22) + 12pt * calc.sin(u / 61 - k * 0.5) - x * 0.42 + 300pt)
+    (
+      x,
+      k * 24pt
+        + 26pt * calc.sin(u / 170 + k * 0.22)
+        + 12pt * calc.sin(u / 61 - k * 0.5)
+        - x * 0.42
+        + 300pt,
+    )
   })
   place(curve(
-    stroke: (paint: ink(if major { 72% } else { 87% }), thickness: if major { 2.2pt } else { 1.4pt }, join: "round"),
+    stroke: (
+      paint: ink(if major { 72% } else { 87% }),
+      thickness: if major { 2.2pt } else { 1.4pt },
+      join: "round",
+    ),
     curve.move(pts.first()),
     ..pts.slice(1).map(p => curve.line(p)),
   ))

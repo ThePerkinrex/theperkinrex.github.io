@@ -17,13 +17,16 @@
     let plain-title = if meta.title == none { "" } else { plain-text(meta.title) }
     // Link previews (Open Graph) don't accept SVG: an SVG hero uses the PNG that
     // scripts/og-images.sh renders from it, and pages without a hero use the wide logo.
-    let image = site.origin + if meta.hero == none {
-      asset-url("/og/logo-wide.png")
-    } else if meta.hero.ends-with(".svg") {
-      asset-url("/og/" + meta.hero.split("/").last().trim(".svg", at: end) + ".png")
-    } else {
-      meta.hero
-    }
+    let image = (
+      site.origin
+        + if meta.hero == none {
+          asset-url("/og/logo-wide.png")
+        } else if meta.hero.ends-with(".svg") {
+          asset-url("/og/" + meta.hero.split("/").last().trim(".svg", at: end) + ".png")
+        } else {
+          meta.hero
+        }
+    )
     entries += canonical(url)
     if plain-title != "" {
       entries += open-graph(

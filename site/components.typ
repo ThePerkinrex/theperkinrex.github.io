@@ -1,5 +1,5 @@
 // Components posts can use: `#import "/site/components.typ": *`
-// (admonitions, `asset-image`, `details`, `csv-table`, `code` and `kbd`).
+// (admonitions, `asset-image`, `details`, `csv-table`, `code`, `kbd` and `todo`).
 //
 // Every post is rendered twice: as an HTML page and as a downloadable PDF (`site/print.typ`).
 // Each component therefore has two renderings and picks one with `by-target`; posts only call the
@@ -245,3 +245,33 @@
     tracking: 0pt,
   )[Typst]),
 )
+
+// Drafting notes. `#todo[expand on the forecasting model]` marks something still to write, inline
+// or as its own paragraph; `#todo()` alone is a bare marker. They render under `tola dev`; a
+// production build fails on any left in a published (non-draft) post, so none ships by mistake.
+
+#let todo-dev-mode = json("build-mode.json").dev
+
+/// A highlighted TODO note, in the Draft badge's colours.
+#let todo(..args) = {
+  assert(
+    args.named().len() == 0 and args.pos().len() <= 1,
+    message: "`todo` takes one optional body",
+  )
+  let body = args.pos().at(0, default: [])
+  // Inside `context`, so it runs only when the post is rendered into a document: production builds
+  // still evaluate drafts (for their metadata) but never render them.
+  context assert(
+    todo-dev-mode,
+    message: "a `#todo` is left in a published post: " + repr(body),
+  )
+  by-target(
+    html: html.mark(class: "todo")[#html.strong[TODO]#if body != [] [: #body]],
+    paged: highlight(
+      fill: palette.draft-bg,
+      extent: 1pt,
+      radius: 2pt,
+      text(fill: palette.draft-text)[*TODO*#if body != [] [: #body]],
+    ),
+  )
+}

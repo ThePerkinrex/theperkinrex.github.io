@@ -13,7 +13,11 @@
 
 // Motion lines: it's travelling.
 #for (i, y) in (150pt, 210pt, 270pt, 330pt).enumerate() {
-  place(line(start: (60pt + i * 18pt, y), end: (200pt + i * 6pt, y), stroke: (paint: ink(55% + i * 8%), thickness: 6pt, cap: "round")))
+  place(line(start: (60pt + i * 18pt, y), end: (200pt + i * 6pt, y), stroke: (
+    paint: ink(55% + i * 8%),
+    thickness: 6pt,
+    cap: "round",
+  )))
 }
 
 // The parcel, tilted a little.
@@ -35,10 +39,43 @@
     place(dx: 20pt, dy: 184pt, text(size: 14pt, weight: "bold", tracking: 1.5pt)[CONTENTS])
     place(dx: 20pt, dy: 204pt, text(font: mono, size: 18pt)[e41d07.tar.zst])
     // Barcode.
-    let widths = (3, 1, 2, 1, 1, 3, 2, 1, 3, 1, 1, 2, 1, 3, 1, 2, 2, 1, 1, 3, 1, 2, 1, 1, 3, 2, 1, 2, 1, 3)
+    let widths = (
+      3,
+      1,
+      2,
+      1,
+      1,
+      3,
+      2,
+      1,
+      3,
+      1,
+      1,
+      2,
+      1,
+      3,
+      1,
+      2,
+      2,
+      1,
+      1,
+      3,
+      1,
+      2,
+      1,
+      1,
+      3,
+      2,
+      1,
+      2,
+      1,
+      3,
+    )
     let x = 20pt
     for (i, w) in widths.enumerate() {
-      if calc.even(i) { place(dx: x, dy: 240pt, rect(width: w * 2.6pt, height: 42pt, fill: ink-dark)) }
+      if calc.even(i) {
+        place(dx: x, dy: 240pt, rect(width: w * 2.6pt, height: 42pt, fill: ink-dark))
+      }
       x += w * 2.6pt + 1.6pt
     }
   })
@@ -46,7 +83,10 @@
   // The tamper seal.
   place(dx: 410pt, dy: 52pt, {
     place(circle(radius: 52pt, fill: accent, stroke: 4pt + white))
-    place(box(width: 104pt, height: 104pt, align(center + horizon, text(fill: white, weight: "bold")[
+    place(box(width: 104pt, height: 104pt, align(center + horizon, text(
+      fill: white,
+      weight: "bold",
+    )[
       #text(size: 22pt)[HMAC] \
       #text(size: 13pt, tracking: 1pt)[SEALED]
     ])))
@@ -58,5 +98,8 @@
   inset: (x: 18pt, y: 12pt),
   radius: 6pt,
   stroke: 5pt + white,
-  text(size: 24pt, weight: "bold", tracking: 2pt, fill: white)[PREBUILT \ #text(size: 17pt, tracking: 1.5pt)[NO ASSEMBLY REQUIRED]],
+  text(size: 24pt, weight: "bold", tracking: 2pt, fill: white)[PREBUILT \ #text(
+      size: 17pt,
+      tracking: 1.5pt,
+    )[NO ASSEMBLY REQUIRED]],
 )))

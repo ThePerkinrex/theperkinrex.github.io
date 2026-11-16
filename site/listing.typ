@@ -11,10 +11,12 @@
 /// Words in a post's body, not counting code blocks (inline code still counts) or anything
 /// wordometer skips by default (maths, citations, images). Text produced inside `context`, such
 /// as components built on `by-target`, is opaque and goes uncounted.
-#let post-word-count(post) = word-count-of(
-  include post.source.file,
-  exclude: (raw.where(block: true),),
-).words
+#let post-word-count(post) = {
+  word-count-of(
+    include post.source.file,
+    exclude: (raw.where(block: true),),
+  ).words
+}
 
 /// " · N min read" for a post (at least one minute), to follow its date. Nothing for an empty
 /// post, such as a draft stub.

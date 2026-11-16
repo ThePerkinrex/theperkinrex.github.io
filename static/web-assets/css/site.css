@@ -824,3 +824,13 @@ section[role="doc-bibliography"] ul {
 section[role="doc-bibliography"] li {
 	margin-bottom: 0.5em;
 }
+
+/* `#todo` drafting notes (site/components.typ), in the Draft badge's colours in both themes. */
+mark.todo {
+	padding: 0.1em 0.35em;
+	border-radius: 4px;
+	background: #f5c542;
+	color: #2a2200;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}

@@ -140,10 +140,17 @@
         #html.script("", src: asset-url("/assets/scripts/site.js"), defer: true)
         // The .ico first, sized so Chrome doesn't prefer it: browsers with SVG icons take the SVG.
         #html.link(rel: "icon", href: asset-url("/favicon.ico"), sizes: ((32, 32),))
-        #html.link(rel: "icon", type: "image/svg+xml", href: asset-url("/assets/images/favicon.svg"))
+        #html.link(
+          rel: "icon",
+          type: "image/svg+xml",
+          href: asset-url("/assets/images/favicon.svg"),
+        )
         // Square on purpose: iOS rounds home-screen icons itself.
         // `apple-touch-icon` is not a standard rel value, so typed `html.link` rejects it.
-        #html.elem("link", attrs: (rel: "apple-touch-icon", href: asset-url("/apple-touch-icon.png")))
+        #html.elem("link", attrs: (
+          rel: "apple-touch-icon",
+          href: asset-url("/apple-touch-icon.png"),
+        ))
         #html.link(
           rel: "alternate",
           type: "application/rss+xml",
