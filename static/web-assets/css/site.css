@@ -308,6 +308,81 @@ math[display="block"] {
 details {
 	margin-bottom: 1.5em;
 }
+figure {
+	margin: 0 0 1.5em 0;
+}
+figcaption {
+	color: var(--muted);
+	font-size: 0.8em;
+	line-height: 1.5;
+}
+/* `chart` (site/chart.typ, drawn by scripts/chart.js with uPlot). Before the script runs, or
+   without it, the chart is its text description. */
+.chart {
+	margin: 0 0 0.75em 0;
+	text-align: left;
+	border-radius: 4px;
+}
+.chart:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 4px;
+}
+.chart-fallback {
+	color: var(--muted);
+	font-size: 0.8em;
+}
+.chart .chart-title {
+	margin: 0.75em 0 0 0;
+	color: var(--heading);
+	font-size: 0.8em;
+	font-weight: 700;
+	line-height: 1.4;
+}
+.chart .chart-title:first-child {
+	margin-top: 0;
+}
+.chart .uplot {
+	font-family: var(--font-body);
+}
+/* uPlot's live legend doubles as the readout: the date and each series' value at the cursor. */
+.chart .u-legend {
+	margin: 0 0 0.25em 0;
+	text-align: left;
+	font-size: 0.75em;
+	line-height: 1.4;
+	color: var(--text);
+}
+.chart .u-legend .u-series {
+	padding: 0 0.75em 0 0;
+}
+.chart .u-legend .u-series > * {
+	padding: 0 0.15em;
+}
+.chart .u-legend th {
+	font-weight: 400;
+	color: var(--muted);
+	border: none;
+}
+.chart .u-legend td {
+	border: none;
+	font-variant-numeric: tabular-nums;
+}
+.chart .u-legend .u-marker {
+	/* A short line in the series' colour (uPlot sets it as the border colour). */
+	width: 1em;
+	height: 0;
+	border-width: 2px 0 0 0 !important;
+	background: none !important;
+	vertical-align: middle;
+}
+/* The legend sits above its plot. */
+.chart .uplot {
+	display: flex;
+	flex-direction: column;
+}
+.chart .u-legend {
+	order: -1;
+}
 li > p,
 .prose li > p {
 	margin: 0.25em 0;

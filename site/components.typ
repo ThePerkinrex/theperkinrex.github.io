@@ -1,5 +1,5 @@
 // Components posts can use: `#import "/site/components.typ": *`
-// (admonitions, `asset-image`, `details`, `csv-table`, `code`, `kbd` and `todo`).
+// (admonitions, `asset-image`, `details`, `csv-table`, `chart`, `code`, `kbd` and `todo`).
 //
 // Every post is rendered twice: as an HTML page and as a downloadable PDF (`site/print.typ`).
 // Each component therefore has two renderings and picks one with `by-target`; posts only call the
@@ -144,6 +144,10 @@
     height: if height == none { auto } else { height * 0.75pt },
   )),
 )
+
+// Charts (`chart`, `panel`, `series`, `event`, `band`): described once, interactive on the web
+// and drawn with Lilaq in the PDF. See site/chart.typ.
+#import "chart.typ": band, chart, event, panel, series
 
 /// A collapsible section. On paper it is always open, under its summary.
 #let details(summary, body) = by-target(

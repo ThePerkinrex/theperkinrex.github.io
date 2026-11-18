@@ -20,10 +20,16 @@
 /// Whether this is a `tola dev` build.
 #let dev-mode = build-info.dev
 
+/// Whether a source is a helper module rather than a page: its file name starts with `_`, like
+/// `content/blog/my-post/_chart.typ`. Posts import these (and the data beside them) without the
+/// helper getting a route of its own.
+#let is-module(source) = source.path.split("/").last().starts-with("_")
+
 /// Select the sources to publish, each paired with the output file its route names. Drafts are
-/// rendered under `tola dev` (marked as drafts) and dropped from production builds.
+/// rendered under `tola dev` (marked as drafts) and dropped from production builds. `_`-prefixed
+/// helper modules are never pages.
 #let select-pages(sources) = {
-  parse-sources(sources, page-schema)
+  parse-sources(sources.filter(source => not is-module(source)), page-schema)
     .filter(source => dev-mode or not source.meta.draft)
     .map(source => (
       source: source,

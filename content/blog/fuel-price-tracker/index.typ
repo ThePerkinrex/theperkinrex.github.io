@@ -1,5 +1,6 @@
 #import "@tola/source:0.0.0": tola-meta
 #import "/site/components.typ": *
+#import "_chart.typ": fuel-price-chart, fuel-price-table, last-day
 
 #tola-meta((
   title: "I just wanted to know where to fill up",
@@ -19,8 +20,18 @@ The latest few months (and years) have been a bit crazy in terms of prices chang
 specially when it comes to fuel prices. The volatility has gone through the roof, thanks to
 inflation, the wars in Ukraine and the Middle East, and tariffs.
 
-#todo[
-  A graph of the recent fuel prices in Spain / volatility
+#figure(
+  fuel-price-chart,
+  caption: [
+    Average price at every station in mainland Spain and the Balearics (the Canaries, Ceuta and
+    Melilla have their own fuel taxes), per day, from the Ministry's records and, since March 2026,
+    my own tracker. Updated #last-day.display("[day] [month repr:long] [year]").
+  ],
+  numbering: none,
+)
+
+#details[The numbers behind the chart: average price and widest monthly swing, by year][
+  #fuel-price-table
 ]
 
 So, given this situation, I wanted to find out what gas stations in Spain had the cheapest prices,

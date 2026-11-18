@@ -28,9 +28,10 @@ time. The extension needs `tola` on your `PATH` (or `tola.serverPath` set).
 | --- | --- |
 | `content/index.typ`, `content/about.typ` | the home and about pages |
 | `content/blog/*.typ` | blog posts; `content/blog/foo.typ` (or `content/blog/foo/index.typ`, with data files beside it) is served at `/blog/foo/` |
+| `content/**/_*.typ` | helper modules a page imports (such as a post's chart), never pages themselves (`is-module` in `site/selection.typ`) |
 | `content/blog/example-post/` | a draft showing every feature a post can use (TOC, admonitions, code, maths, footnotes, citations, CSV tables); copy it to start a new post |
 | `site.typ` | the root program: selects pages, renders them, and emits the blog index, 404, feed and sitemap |
-| `site/` | templates: `layout.typ` (shell, header, footer), `page.typ` (home/post/page, footnotes, outline scoping), `components.typ` (admonitions, `csv-table`), `listing.typ` (blog index), `schema.typ` (allowed metadata fields) |
+| `site/` | templates: `layout.typ` (shell, header, footer), `page.typ` (home/post/page, footnotes, outline scoping), `components.typ` (admonitions, `csv-table`), `chart.typ` (charts described once: interactive on the web via `scripts/chart.js` and the vendored uPlot, drawn with Lilaq in the PDF), `listing.typ` (blog index), `schema.typ` (allowed metadata fields) |
 | `static/web-assets/` | CSS, fonts, images and `scripts/site.js` (theme toggle, sticky-header title), served under `/assets/` |
 | `static/hero-sources/` | Typst sources for SVG post banners (not published); render with `typst compile --font-path static/typst-fonts --format svg <file>.typ static/web-assets/images/<file>.svg` |
 | `static/og-images/` | link-preview PNGs (gitignored), rendered from every SVG in `static/web-assets/images/` by the `og-images` hook and served under `/og/`; pages without a hero use `logo-wide.png` |
